@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SPI Dashboard</title>
+  <style>
+    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --dark:#111827; --line:#e5e7eb; }
+    * { box-sizing: border-box; }
+    body { margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--text); }
+    header { background:var(--dark); color:white; padding:22px 18px; }
+    header h1 { margin:0 0 8px 0; font-size:28px; }
+    header p { margin:0; color:#d1d5db; line-height:1.45; }
+    main { padding:16px; max-width:1180px; margin:0 auto; }
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin:14px 0; }
+    .card, .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    .label { color:var(--muted); font-size:13px; margin-bottom:8px; }
+    .value { font-size:26px; font-weight:700; margin-bottom:6px; }
+    h2 { margin:24px 0 12px; font-size:22px; }
+    ol, ul { padding-left:22px; }
+    li { margin-bottom:9px; line-height:1.4; }
+    .badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#e0f2fe; color:#075985; font-size:12px; font-weight:700; }
+    .warn { background:#fef3c7; color:#92400e; }
+    .ok { background:#dcfce7; color:#166534; }
+    .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SPI Dashboard</h1>
+    <p>Публичная панель управления проектом SPI Replacement / MVP КИПиА. Без исходников приватного MVP.</p>
+  </header>
+  <main>
+    <section class="grid">
+      <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
+      <article class="card"><div class="label">Прототип</div><div class="value">v0.8.1</div><div>properties sync fix</div></article>
+      <article class="card"><div class="label">Демо</div><div class="value">v0.5.5</div><div>nav verified</div></article>
+      <article class="card"><div class="label">Backend</div><div class="value">DEV-004</div><div>SQLAlchemy модели</div></article>
+    </section>
+    <h2>Ближайшие приоритеты</h2>
+    <section class="panel">
+      <ol>
+        <li><b>P1:</b> Ознакомиться со стратегическим документом.</li>
+        <li><b>P1:</b> Исправить задвоение наименований узлов: Чайва-Чайва должно отображаться как Чайва.</li>
+        <li><b>P1:</b> Разобраться с последним изменением, вынесенным в v0.8.1.</li>
+        <li><b>P2:</b> Проверить сохранение утренних и вечерних запусков в журнал.</li>
+        <li><b>P2:</b> Проверить автоматическое обновление dashboard.</li>
+      </ol>
+    </section>
+    <h2>Актуальные артефакты</h2>
+    <section class="panel">
+      <ul>
+        <li><b>Прототип:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip</li>
+        <li><b>Демо:</b> kipia_manager_demo_v0_5_5_nav_verified.zip</li>
+        <li><b>Стратегический документ:</b> Контур_КИПиА_стратегические_варианты_развития_v0_2_исправлено.docx</li>
+        <li><b>Приватный MVP:</b> spi-replacement-kipia-mvp</li>
+        <li><b>Публичный Dashboard:</b> spi-dashboard</li>
+      </ul>
+    </section>
+    <h2>Контроль и журнал</h2>
+    <section class="panel">
+      <ul>
+        <li><span class="badge ok">готово</span> Создан журнал запусков в приватном GitHub.</li>
+        <li><span class="badge ok">готово</span> Настроена утренняя задача SPI.</li>
+        <li><span class="badge ok">готово</span> Настроена вечерняя задача SPI.</li>
+        <li><span class="badge warn">проверить утром</span> Автозапись отчёта в журнал и обновление HTML.</li>
+      </ul>
+    </section>
+    <h2>Для будущей команды</h2>
+    <section class="panel">
+      <p>Этот экран должен стать общей точкой входа для команды: версии, задачи, ошибки, решения, контрольные отчёты, GitHub/Codex-активность, письма и встречи по SPI.</p>
+    </section>
+    <div class="footer">Следующий этап: связать публичный dashboard с данными журнала и GitHub Issues.</div>
+  </main>
+</body>
+</html>
