@@ -5,49 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SPI Dashboard</title>
   <style>
-    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --dark:#111827; --line:#e5e7eb; }
+    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --dark:#111827; --line:#e5e7eb; --blue:#2563eb; }
     * { box-sizing: border-box; }
     body { margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--text); }
-    header { background:var(--dark); color:white; padding:22px 18px; }
-    header h1 { margin:0 0 8px 0; font-size:28px; }
+    header { background:linear-gradient(135deg,#111827,#1f2937); color:white; padding:24px 18px; }
+    header h1 { margin:0 0 8px 0; font-size:30px; }
     header p { margin:0; color:#d1d5db; line-height:1.45; }
     main { padding:16px; max-width:1180px; margin:0 auto; }
+    nav { display:flex; gap:8px; overflow-x:auto; padding:10px 0; position:sticky; top:0; background:var(--bg); z-index:2; }
+    nav a { white-space:nowrap; text-decoration:none; background:white; border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:#111827; }
     .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin:14px 0; }
     .card, .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
     .label { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .value { font-size:26px; font-weight:700; margin-bottom:6px; }
     h2 { margin:24px 0 12px; font-size:22px; }
+    h3 { margin:14px 0 8px; }
     ol, ul { padding-left:22px; }
     li { margin-bottom:9px; line-height:1.4; }
     .badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#e0f2fe; color:#075985; font-size:12px; font-weight:700; }
     .warn { background:#fef3c7; color:#92400e; }
     .ok { background:#dcfce7; color:#166534; }
+    .bad { background:#fee2e2; color:#991b1b; }
+    .muted { color:var(--muted); }
+    .timeline { border-left:3px solid var(--line); padding-left:14px; }
+    .timeline div { margin-bottom:12px; }
+    .links a { display:block; margin:8px 0; color:var(--blue); }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Публичная панель управления проектом SPI Replacement / MVP КИПиА. Без исходников приватного MVP.</p>
+    <p>Панель управления проектом SPI Replacement / MVP КИПиА. Публичная страница без исходников приватного MVP.</p>
   </header>
   <main>
+    <nav>
+      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
+    </nav>
+
+    <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
       <article class="card"><div class="label">Прототип</div><div class="value">v0.8.1</div><div>properties sync fix</div></article>
       <article class="card"><div class="label">Демо</div><div class="value">v0.5.5</div><div>nav verified</div></article>
       <article class="card"><div class="label">Backend</div><div class="value">DEV-004</div><div>SQLAlchemy модели</div></article>
+      <article class="card"><div class="label">База данных</div><div class="value">PostgreSQL</div><div>SQLite запрещён</div></article>
+      <article class="card"><div class="label">Документы</div><div class="value">v0.2</div><div>стратегический документ</div></article>
     </section>
-    <h2>Ближайшие приоритеты</h2>
+
+    <h2 id="priorities">Ближайшие приоритеты</h2>
     <section class="panel">
       <ol>
         <li><b>P1:</b> Ознакомиться со стратегическим документом.</li>
         <li><b>P1:</b> Исправить задвоение наименований узлов: Чайва-Чайва должно отображаться как Чайва.</li>
         <li><b>P1:</b> Разобраться с последним изменением, вынесенным в v0.8.1.</li>
+        <li><b>P1:</b> Проверить PR DEV-004 и перейти к DEV-005 после готовности.</li>
         <li><b>P2:</b> Проверить сохранение утренних и вечерних запусков в журнал.</li>
         <li><b>P2:</b> Проверить автоматическое обновление dashboard.</li>
       </ol>
     </section>
-    <h2>Актуальные артефакты</h2>
+
+    <h2 id="artifacts">Актуальные артефакты</h2>
     <section class="panel">
       <ul>
         <li><b>Прототип:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip</li>
@@ -57,20 +75,72 @@
         <li><b>Публичный Dashboard:</b> spi-dashboard</li>
       </ul>
     </section>
-    <h2>Контроль и журнал</h2>
+
+    <h2 id="development">Разработка</h2>
+    <section class="grid">
+      <article class="card"><div class="label">DEV-001</div><div class="value">✅</div><div>Стартовая структура проекта</div></article>
+      <article class="card"><div class="label">DEV-002</div><div class="value">✅</div><div>PostgreSQL</div></article>
+      <article class="card"><div class="label">DEV-003</div><div class="value">✅</div><div>Alembic миграции</div></article>
+      <article class="card"><div class="label">DEV-004</div><div class="value">⏳</div><div>SQLAlchemy модели</div></article>
+      <article class="card"><div class="label">DEV-005</div><div class="value">Далее</div><div>CRUD sites/areas/units</div></article>
+      <article class="card"><div class="label">DEV-006/007</div><div class="value">План</div><div>Backend API</div></article>
+    </section>
+
+    <h2 id="journal">Контроль и журнал</h2>
     <section class="panel">
       <ul>
         <li><span class="badge ok">готово</span> Создан журнал запусков в приватном GitHub.</li>
         <li><span class="badge ok">готово</span> Настроена утренняя задача SPI.</li>
         <li><span class="badge ok">готово</span> Настроена вечерняя задача SPI.</li>
+        <li><span class="badge ok">готово</span> Создан публичный dashboard для телефона.</li>
         <li><span class="badge warn">проверить утром</span> Автозапись отчёта в журнал и обновление HTML.</li>
       </ul>
+      <div class="timeline">
+        <div><b>2026-06-28</b> — создан журнал и GitHub Actions.</div>
+        <div><b>2026-06-29</b> — проверить утренний запуск и запись в журнал.</div>
+      </div>
     </section>
-    <h2>Для будущей команды</h2>
+
+    <h2 id="bugs">Ошибки и контроль качества</h2>
     <section class="panel">
-      <p>Этот экран должен стать общей точкой входа для команды: версии, задачи, ошибки, решения, контрольные отчёты, GitHub/Codex-активность, письма и встречи по SPI.</p>
+      <ul>
+        <li><span class="badge bad">исправить</span> Задвоение узлов: Чайва-Чайва → Чайва.</li>
+        <li><span class="badge warn">контроль</span> Проверять, что старые ошибки интерфейса не возвращаются.</li>
+        <li><span class="badge ok">учтено</span> v0.8.1 синхронизация правой панели свойств с выбранным прибором.</li>
+        <li><span class="badge ok">правило</span> Каждая новая версия должна иметь увеличенный номер.</li>
+      </ul>
     </section>
-    <div class="footer">Следующий этап: связать публичный dashboard с данными журнала и GitHub Issues.</div>
+
+    <h2 id="team">Команда</h2>
+    <section class="panel">
+      <p><b>Текущий режим:</b> подготовка проекта до появления команды.</p>
+      <ul>
+        <li>Руководитель/архитектор проекта: Алексей.</li>
+        <li>Backend: FastAPI, SQLAlchemy, Alembic, PostgreSQL.</li>
+        <li>Frontend: React/Vite, русская локализация, готовность к мультиязычности.</li>
+        <li>DevOps: Docker, GitHub Actions.</li>
+        <li>Миграция: извлечение данных из SPI / Oracle и загрузка в PostgreSQL.</li>
+      </ul>
+    </section>
+
+    <h2 id="management">Для руководства</h2>
+    <section class="panel">
+      <ul>
+        <li>Цель: замена SmartPlant Instrumentation с сохранением инженерных данных КИПиА.</li>
+        <li>Демо должно показывать карточки приборов, спецификации, контуры и навигацию по объектам.</li>
+        <li>SPI после миграции остаётся read-only.</li>
+        <li>Чертежи не должны превращаться в ручной PDF-процесс.</li>
+        <li>Публичный dashboard можно использовать как витрину статуса, без раскрытия исходников.</li>
+      </ul>
+    </section>
+
+    <h2>Ссылки</h2>
+    <section class="panel links">
+      <a href="https://github.com/ivpetr168-hue/spi-dashboard">Публичный репозиторий dashboard</a>
+      <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
+    </section>
+
+    <div class="footer">Dashboard v0.2. Следующий этап: автоматическая публикация данных из журнала и GitHub Issues.</div>
   </main>
 </body>
 </html>
