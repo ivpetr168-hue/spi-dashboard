@@ -46,29 +46,29 @@
     <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
-      <article class="card"><div class="label">Прототип</div><div class="value">v0.8.1</div><div>properties sync fix</div></article>
+      <article class="card"><div class="label">Прототип</div><div class="value">v0.8.1</div><div>актуальный прототип-источник</div></article>
       <article class="card"><div class="label">Демо</div><div class="value">v0.5.5</div><div>nav verified</div></article>
       <article class="card"><div class="label">Backend</div><div class="value">DEV-004</div><div>SQLAlchemy модели</div></article>
+      <article class="card"><div class="label">Следующий этап</div><div class="value">SYNC</div><div>репозиторий ↔ прототип v0.8.1</div></article>
       <article class="card"><div class="label">База данных</div><div class="value">PostgreSQL</div><div>SQLite запрещён</div></article>
-      <article class="card"><div class="label">Документы</div><div class="value">v0.2</div><div>стратегический документ</div></article>
     </section>
 
     <h2 id="priorities">Ближайшие приоритеты</h2>
     <section class="panel">
       <ol>
-        <li><b>P1:</b> Ознакомиться со стратегическим документом.</li>
+        <li><b>P1:</b> Закрыть/проверить PR DEV-004: SQLAlchemy модели.</li>
+        <li><b>P1:</b> После DEV-004 выполнить синхронизацию всего репозитория с актуальным прототипом v0.8.1.</li>
         <li><b>P1:</b> Исправить задвоение наименований узлов: Чайва-Чайва должно отображаться как Чайва.</li>
         <li><b>P1:</b> Разобраться с последним изменением, вынесенным в v0.8.1.</li>
-        <li><b>P1:</b> Проверить PR DEV-004 и перейти к DEV-005 после готовности.</li>
+        <li><b>P2:</b> Ознакомиться со стратегическим документом.</li>
         <li><b>P2:</b> Проверить сохранение утренних и вечерних запусков в журнал.</li>
-        <li><b>P2:</b> Проверить автоматическое обновление dashboard.</li>
       </ol>
     </section>
 
     <h2 id="artifacts">Актуальные артефакты</h2>
     <section class="panel">
       <ul>
-        <li><b>Прототип:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip</li>
+        <li><b>Прототип-источник для синхронизации:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip</li>
         <li><b>Демо:</b> kipia_manager_demo_v0_5_5_nav_verified.zip</li>
         <li><b>Стратегический документ:</b> Контур_КИПиА_стратегические_варианты_развития_v0_2_исправлено.docx</li>
         <li><b>Приватный MVP:</b> spi-replacement-kipia-mvp</li>
@@ -82,8 +82,8 @@
       <article class="card"><div class="label">DEV-002</div><div class="value">✅</div><div>PostgreSQL</div></article>
       <article class="card"><div class="label">DEV-003</div><div class="value">✅</div><div>Alembic миграции</div></article>
       <article class="card"><div class="label">DEV-004</div><div class="value">⏳</div><div>SQLAlchemy модели</div></article>
-      <article class="card"><div class="label">DEV-005</div><div class="value">Далее</div><div>CRUD sites/areas/units</div></article>
-      <article class="card"><div class="label">DEV-006/007</div><div class="value">План</div><div>Backend API</div></article>
+      <article class="card"><div class="label">SYNC-001</div><div class="value">Далее</div><div>Синхронизация репозитория с прототипом v0.8.1</div></article>
+      <article class="card"><div class="label">DEV-005</div><div class="value">После sync</div><div>CRUD/API по синхронизированной базе</div></article>
     </section>
 
     <h2 id="journal">Контроль и журнал</h2>
@@ -98,6 +98,7 @@
       <div class="timeline">
         <div><b>2026-06-28</b> — создан журнал и GitHub Actions.</div>
         <div><b>2026-06-29</b> — проверить утренний запуск и запись в журнал.</div>
+        <div><b>После DEV-004</b> — синхронизировать репозиторий с прототипом v0.8.1.</div>
       </div>
     </section>
 
@@ -140,7 +141,7 @@
       <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
     </section>
 
-    <div class="footer">Dashboard v0.2. Следующий этап: автоматическая публикация данных из журнала и GitHub Issues.</div>
+    <div class="footer">Dashboard v0.3. План уточнён: после DEV-004 идёт синхронизация репозитория с актуальным прототипом v0.8.1.</div>
   </main>
 </body>
 </html>
