@@ -30,6 +30,17 @@
     .timeline { border-left:3px solid var(--line); padding-left:14px; }
     .timeline div { margin-bottom:12px; }
     .links a { display:block; margin:8px 0; color:var(--blue); }
+    .table-wrap { overflow-x:auto; margin-top:12px; }
+    table { width:100%; border-collapse:collapse; min-width:900px; }
+    th, td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; line-height:1.35; }
+    th { background:#f9fafb; font-size:13px; color:#374151; }
+    .status-done { border-left:5px solid #22c55e; }
+    .status-work { border-left:5px solid #f59e0b; }
+    .status-next { border-left:5px solid #2563eb; }
+    .status-blocked { border-left:5px solid #ef4444; }
+    .progress { width:100%; height:10px; background:#e5e7eb; border-radius:999px; overflow:hidden; margin-top:8px; }
+    .progress span { display:block; height:100%; background:#2563eb; }
+    .small { font-size:13px; }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
@@ -40,7 +51,7 @@
   </header>
   <main>
     <nav>
-      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
+      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#task-results">План-факт</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
     </nav>
 
     <h2 id="summary">Сводка</h2>
@@ -63,6 +74,91 @@
         <li><b>P2:</b> Ознакомиться со стратегическим документом.</li>
         <li><b>P2:</b> Проверить сохранение утренних и вечерних запусков в журнал.</li>
       </ol>
+    </section>
+
+    <h2 id="task-results">План-факт выполнения задач</h2>
+    <section class="grid">
+      <article class="card"><div class="label">Выполнено</div><div class="value">4</div><div>DEV-001, DEV-002, DEV-003, DASH-002</div></article>
+      <article class="card"><div class="label">В работе / проверка</div><div class="value">1</div><div>DEV-004</div></article>
+      <article class="card"><div class="label">Следующий обязательный этап</div><div class="value">1</div><div>SYNC-001</div></article>
+      <article class="card"><div class="label">Заблокировано до SYNC</div><div class="value">1</div><div>DEV-005</div></article>
+    </section>
+    <section class="panel">
+      <p class="muted">Раздел показывает не только список запланированных задач, но и фактический результат: что получено, чем подтверждается и какой следующий шаг нужен.</p>
+      <div class="progress"><span style="width:57%"></span></div>
+      <p class="small muted">Ориентировочная готовность текущего короткого плана: 4 из 7 задач закрыты или отражены в dashboard.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Запланированная задача</th>
+              <th>Статус</th>
+              <th>Фактический результат</th>
+              <th>Подтверждение / контроль</th>
+              <th>Следующий шаг</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="status-done">
+              <td><b>DEV-001</b></td>
+              <td>Создать стартовую структуру проекта.</td>
+              <td><span class="badge ok">готово</span></td>
+              <td>Подготовлен базовый каркас backend/frontend и структура приватного MVP-репозитория.</td>
+              <td>Репозиторий MVP существует; дальнейшие задачи ведутся поверх этой структуры.</td>
+              <td>Поддерживать структуру при синхронизации с v0.8.1.</td>
+            </tr>
+            <tr class="status-done">
+              <td><b>DEV-002</b></td>
+              <td>Настроить PostgreSQL как целевую БД.</td>
+              <td><span class="badge ok">готово</span></td>
+              <td>PostgreSQL принят как обязательная БД прототипа и MVP; SQLite не используется.</td>
+              <td>В dashboard и архитектуре зафиксировано правило: PostgreSQL-only.</td>
+              <td>Проверять, что новые версии не возвращают SQLite.</td>
+            </tr>
+            <tr class="status-done">
+              <td><b>DEV-003</b></td>
+              <td>Создать Alembic-миграции.</td>
+              <td><span class="badge ok">готово</span></td>
+              <td>Схема БД должна управляться миграциями, а не ручными изменениями.</td>
+              <td>Следующие изменения БД принимать только через Alembic.</td>
+              <td>При SYNC-001 сверить миграции с фактическим прототипом v0.8.1.</td>
+            </tr>
+            <tr class="status-work">
+              <td><b>DEV-004</b></td>
+              <td>Создать SQLAlchemy ORM-модели.</td>
+              <td><span class="badge warn">проверка</span></td>
+              <td>Требуется закрыть/проверить PR и убедиться, что модели соответствуют текущей схеме PostgreSQL.</td>
+              <td>Контроль: ORM-модели должны соответствовать миграциям и таблицам MVP.</td>
+              <td>После подтверждения DEV-004 перейти к SYNC-001.</td>
+            </tr>
+            <tr class="status-next">
+              <td><b>SYNC-001</b></td>
+              <td>Полностью синхронизировать репозиторий с актуальным прототипом v0.8.1.</td>
+              <td><span class="badge">следующий этап</span></td>
+              <td>Ожидаемый результат: приватный репозиторий соответствует kipia_mvp_prototype_v0_8_1_properties_sync_fix.</td>
+              <td>Контроль: сохранено исправление синхронизации правой панели свойств с выбранным прибором.</td>
+              <td>Выполнить до начала DEV-005.</td>
+            </tr>
+            <tr class="status-blocked">
+              <td><b>DEV-005</b></td>
+              <td>Создать CRUD/API производственной структуры.</td>
+              <td><span class="badge bad">заблокировано</span></td>
+              <td>Задача сознательно не начинается до завершения SYNC-001.</td>
+              <td>Контроль: не начинать разработку API поверх несинхронизированного репозитория.</td>
+              <td>Разблокировать только после SYNC-001.</td>
+            </tr>
+            <tr class="status-done">
+              <td><b>DASH-002</b></td>
+              <td>Показать результаты выполнения запланированных задач на публичном dashboard.</td>
+              <td><span class="badge ok">готово</span></td>
+              <td>Добавлен раздел «План-факт выполнения задач» со статусами, результатами, контролем и следующими шагами.</td>
+              <td>Публичный dashboard теперь показывает не только планы, но и фактическое состояние задач.</td>
+              <td>Дальше добавлять журнал запусков, версии документов и процент готовности проекта.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
     <h2 id="artifacts">Актуальные артефакты</h2>
@@ -93,11 +189,12 @@
         <li><span class="badge ok">готово</span> Настроена утренняя задача SPI.</li>
         <li><span class="badge ok">готово</span> Настроена вечерняя задача SPI.</li>
         <li><span class="badge ok">готово</span> Создан публичный dashboard для телефона.</li>
+        <li><span class="badge ok">готово</span> Добавлен публичный план-факт выполнения задач.</li>
         <li><span class="badge warn">проверить утром</span> Автозапись отчёта в журнал и обновление HTML.</li>
       </ul>
       <div class="timeline">
         <div><b>2026-06-28</b> — создан журнал и GitHub Actions.</div>
-        <div><b>2026-06-29</b> — проверить утренний запуск и запись в журнал.</div>
+        <div><b>2026-06-29</b> — добавлен раздел результатов выполнения запланированных задач.</div>
         <div><b>После DEV-004</b> — синхронизировать репозиторий с прототипом v0.8.1.</div>
       </div>
     </section>
@@ -141,7 +238,7 @@
       <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
     </section>
 
-    <div class="footer">Dashboard v0.3. План уточнён: после DEV-004 идёт синхронизация репозитория с актуальным прототипом v0.8.1.</div>
+    <div class="footer">Dashboard v0.4. Добавлен план-факт выполнения задач: видны запланированные задачи, фактические результаты, контроль и следующие шаги.</div>
   </main>
 </body>
 </html>
