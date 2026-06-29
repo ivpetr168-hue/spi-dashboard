@@ -19,9 +19,6 @@
     .label { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .value { font-size:26px; font-weight:700; margin-bottom:6px; }
     h2 { margin:24px 0 12px; font-size:22px; }
-    h3 { margin:18px 0 8px; }
-    ol,ul { padding-left:22px; }
-    li { margin-bottom:8px; line-height:1.4; }
     .badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#e0f2fe; color:#075985; font-size:12px; font-weight:700; }
     .ok { background:#dcfce7; color:#166534; }
     .warn { background:#fef3c7; color:#92400e; }
@@ -30,115 +27,102 @@
     .run { border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; margin:12px 0; }
     .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
     time { font-weight:700; }
-    .message { white-space:pre-line; line-height:1.45; background:#f9fafb; border:1px solid var(--line); border-radius:12px; padding:12px; }
-    .table-wrap { overflow-x:auto; margin-top:12px; }
+    pre.message { white-space:pre-wrap; line-height:1.45; background:#f9fafb; border:1px solid var(--line); border-radius:12px; padding:12px; overflow:auto; }
     table { width:100%; border-collapse:collapse; min-width:760px; }
     th,td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; line-height:1.35; }
     th { background:#f9fafb; font-size:13px; color:#374151; }
-    .links a { display:block; margin:8px 0; color:var(--blue); }
+    .table-wrap { overflow-x:auto; }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. На странице показываются последние плановые запуски, статус задач и актуальные версии без раскрытия исходников приватного MVP.</p>
+    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает последние плановые запуски, статус задач и актуальные версии без раскрытия приватных исходников.</p>
   </header>
   <main>
-    <nav>
-      <a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#bugs">Ошибки</a><a href="#links">Ссылки</a>
-    </nav>
+    <nav><a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#cleanup">Почта и уборка</a></nav>
 
     <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
       <article class="card"><div class="label">Главный следующий этап</div><div class="value">SYNC-001</div><div>синхронизация репозитория с v0.8.1</div></article>
       <article class="card"><div class="label">DEV-005</div><div class="value">Блок</div><div>не начинать до завершения SYNC-001</div></article>
-      <article class="card"><div class="label">Утренний план</div><div class="value">08:13</div><div>29.06.2026</div></article>
-      <article class="card"><div class="label">Вечерний контроль</div><div class="value">19:56</div><div>28.06.2026</div></article>
-      <article class="card"><div class="label">Dashboard</div><div class="value">v0.6</div><div>результаты запусков в HTML</div></article>
+      <article class="card"><div class="label">Вечерний контроль</div><div class="value">22:02</div><div>29.06.2026</div></article>
+      <article class="card"><div class="label">Прототип</div><div class="value">0.8.1</div><div>properties-sync-fix</div></article>
+      <article class="card"><div class="label">Dashboard</div><div class="value">v0.7</div><div>обновлен вечерним контролем</div></article>
     </section>
 
     <h2 id="runs">Результаты плановых запусков</h2>
     <section class="panel">
-      <p class="muted">Это не просто список задач. Здесь опубликованы текстовые результаты выполненных плановых заданий: дата, время, тип запуска и полный текст результата.</p>
-
       <article class="run">
-        <div class="meta"><time datetime="2026-06-29T08:13:00+11:00">29.06.2026 08:13</time><span class="badge ok">Утренний план SPI</span></div>
-        <div class="message">Сформирован утренний рабочий план по проекту SPI Replacement / MVP КИПиА.
+        <div class="meta"><time datetime="2026-06-29T22:02:00+11:00">29.06.2026 22:02</time><span class="badge warn">Вечерний контроль SPI</span></div>
+        <pre class="message">Проведен вечерний контроль SPI Replacement / MVP КИПиА.
 
-План на день:
-1. Исправить публикацию результатов плановых заданий в dashboard.
-Цель: чтобы в dashboard были видны не только статусы задач, но и полные текстовые результаты утреннего плана и вечернего контроля.
-Ожидаемый результат: в публичном и приватном HTML-dashboard есть раздел «Результаты плановых запусков».
-Приоритет: P1.
-Критерий готовности: видны записи «2026-06-28 19:56 — Вечерний контроль SPI» и «2026-06-29 08:13 — Утренний план SPI».
+1. Что сделано за день
 
-2. Обновить настройки плановых заданий.
-Цель: будущие утренние и вечерние задания должны не только формировать текст, но и сохранять его в журнал и dashboard.
-Ожидаемый результат: промпты утреннего и вечернего задания содержат требование обновлять docs/spi-control-log.md, публичный dashboard и приватный dashboard.
-Приоритет: P1.
-Критерий готовности: задания обновлены и работают по точному расписанию.
+1. Зафиксирован актуальный прототип для дальнейшей синхронизации: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
+2. Подтверждена правильная последовательность работ: ближайший этап — SYNC-001, синхронизация GitHub-репозитория с проверенным прототипом v0.8.1.
+3. Перед загрузкой ZIP дополнительно защищены файлы dashboard и контроля проекта в workflow синхронизации: docs/spi-control-log.md, docs/spi-dashboard-private.html, send-spi-report-email.yml, update-spi-control-dashboard.yml, manual-test.yml.
+4. Подтверждено, что публичный dashboard находится в отдельном репозитории ivpetr168-hue/spi-dashboard, поэтому SYNC-001 в MVP-репозитории его напрямую не удаляет.
+5. Проверена схема отправки полного письма через GitHub Actions + Gmail App Password: тестовое письмо с полным текстом записи пришло.
+6. Проверены текущие dashboard: публичный и приватный dashboard содержат блок результатов плановых запусков и показывают SYNC-001 как главный следующий этап.
 
-3. Сохранить правильную последовательность разработки.
-Цель: не начать DEV-005 до завершения SYNC-001.
-Ожидаемый результат: во всех dashboard и планах указано, что ближайшая главная задача — SYNC-001.
-Приоритет: P1.
-Критерий готовности: DEV-005 помечен как заблокированный до завершения SYNC-001.
+2. Что не выполнено
 
-4. Проверить актуальные артефакты.
-Цель: не потерять текущую версию прототипа и демо.
-Ожидаемый результат: в dashboard указаны kipia_mvp_prototype_v0_8_1_properties_sync_fix и kipia_manager_demo_v0_5_5_nav_verified.
-Приоритет: P2.
-Критерий готовности: версии видны в dashboard и журнале.
-
-5. Проверить уведомления.
-Цель: обеспечить получение результатов плановых заданий пользователем.
-Ожидаемый результат: определить, можно ли включить уведомления через доступные инструменты; если нельзя — зафиксировать ограничение и дать ручной способ включения.
-Приоритет: P1.
-Критерий готовности: статус уведомлений явно указан.
-
-Что проверить вечером:
-1. Появились ли результаты плановых запусков в публичном dashboard.
-2. Появились ли результаты плановых запусков в приватном dashboard.
-3. Обновился ли docs/spi-control-log.md.
-4. Не начат ли DEV-005 до завершения SYNC-001.
-5. Не потерялось ли архитектурное решение по модулю «Управление проектами / Dashboard / Планировщик».</div>
-      </article>
-
-      <article class="run">
-        <div class="meta"><time datetime="2026-06-28T19:56:00+11:00">28.06.2026 19:56</time><span class="badge warn">Вечерний контроль SPI</span></div>
-        <div class="message">Проведен вечерний контроль по проекту SPI Replacement / MVP КИПиА.
-
-Сделано за день:
-1. Подтверждено текущее состояние проекта: основной следующий этап после DEV-004 — SYNC-001.
-2. Зафиксирован актуальный прототип-источник: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
-3. Подтверждено архитектурное правило: Production — Linux + PostgreSQL; Backend — FastAPI + SQLAlchemy + Alembic; Frontend — React/Vite; интерфейс русский с готовностью к мультиязычности.
-4. Зафиксировано обязательное включение модуля «Управление проектами / Dashboard / Планировщик» во все следующие документы, прототипы и dashboard.
-5. Создана основа журнала запусков docs/spi-control-log.md.
-
-Не выполнено:
-1. SYNC-001 еще не выполнен.
+1. SYNC-001 еще не завершен.
 2. DEV-005 не начат и должен оставаться заблокированным до завершения SYNC-001.
-3. Исправление задвоения узлов типа «Чайва-Чайва → Чайва» еще не внесено в актуальный прототип.
-4. Текстовые результаты утреннего и вечернего задания еще не отображались в dashboard как часть HTML-файла.
+3. ZIP с прототипом пока не зафиксирован в PR #15: после сообщения пользователя «загрузил» в PR все еще видна старая голова ветки 2111b717940751bd4dc7926e8598df2b1dae3d4f, 3 коммита и 2 измененных файла.
+4. Автоматический workflow распаковки v0.8.1 не запускался успешно, потому что в ветке не появился коммит с файлом prototype_sources/kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip.
+5. Исправление задвоения узлов типа Чайва-Чайва → Чайва еще не внесено в следующую версию прототипа. Это переносится после завершения SYNC-001.
 
-Ошибки и замечания:
-1. Результаты плановых заданий не были автоматически опубликованы в публичный и приватный dashboard.
-2. Включенные задания существовали, но уведомления были отключены.
-3. Нужно явно показывать в dashboard не только статусы задач, но и текстовые сообщения запусков с датой и временем.
+3. Ошибки и риски
 
-Актуальные версии:
-- Актуальный прототип: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
-- Последнее демо: kipia_manager_demo_v0_5_5_nav_verified.
-- Публичный dashboard: spi-dashboard.
-- Приватный MVP-репозиторий: spi-replacement-kipia-mvp.
+1. Главный риск дня: пользователь мог выбрать ZIP на странице GitHub, но не нажать нижнюю кнопку Commit changes. Поэтому GitHub не видит загруженный файл.
+2. Есть риск начать DEV-005 преждевременно. Это запрещено: сначала нужно завершить SYNC-001.
+3. Автоматическая отправка писем работает только после коммита в docs/spi-control-log.md на ветке main. Текущий вечерний контроль будет отправлен письмом уже после публикации этой записи в GitHub.
+4. Тестовые элементы пока убирать рано: реальный вечерний запуск с новой записью еще нельзя считать проверенным до подтверждения, что письмо по этой записи пришло.
 
-Перенос на следующий день:
-1. Внести результаты вчерашнего вечернего контроля и сегодняшнего утреннего плана в оба dashboard.
-2. Обновить задания так, чтобы будущие результаты записывались в журнал и HTML-dashboard.
-3. Сохранить SYNC-001 как ближайшую главную задачу.
-4. Не начинать DEV-005 до завершения SYNC-001.</div>
+4. Актуальные версии и архитектурные ограничения
+
+1. Актуальный прототип: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
+2. Актуальный следующий этап: SYNC-001.
+3. Запрещено: начинать DEV-005 до завершения SYNC-001.
+4. Архитектура MVP сохраняется: PostgreSQL-only; SQLite запрещен; backend — FastAPI + SQLAlchemy + Alembic; frontend — React/Vite; production — Linux + PostgreSQL; обязательный модуль — «Управление проектами / Dashboard / Планировщик».
+5. Проверяемые исправления v0.8.1: правая панель свойств синхронизируется с выбранным узлом дерева; свойства прибора показываются без контекстного меню; выбор прибора под Instrument Index открывает карточку прибора; данные идут из PostgreSQL через API; SQLite не используется.
+
+5. GitHub / Codex
+
+1. PR #15 SYNC-001 открыт, остается draft, mergeable, ветка sync-001-v081, head 2111b717940751bd4dc7926e8598df2b1dae3d4f, 3 коммита и 2 измененных файла.
+2. В workflow sync-v081-from-upload.yml добавлена защита dashboard-файлов и журналов.
+3. Новых подтвержденных изменений Codex за этот вечерний контроль не обнаружено.
+
+6. Письма и встречи по SPI
+
+1. Gmail: найдено тестовое письмо от SPI Dashboard с темой [SPI] 2026-06-29 16:50 — Тест отправки полного письма SPI; письмо содержит полный текст тестовой записи.
+2. Встречи: календарные события по запросу SPI за 2026-06-29 не найдены.
+
+7. Уборка после настройки уведомлений и почты
+
+Тестовое письмо пришло. Workflow Send SPI report email существует и настроен на push в main при изменении docs/spi-control-log.md. Уборку нужно отложить до подтверждения, что письмо по реальному вечернему запуску пришло. Поэтому manual-test.yml, тестовую запись 16:50, рабочий workflow и SMTP-секреты не трогаю.
+
+8. Перенос на завтра
+
+1. Завершить SYNC-001: добиться появления ZIP в ветке sync-001-v081, запустить workflow распаковки, проверить результат.
+2. После завершения SYNC-001 проверить список измененных файлов PR #15.
+3. Проверить, что в синхронизированном коде не потеряны исправления v0.8.1.
+4. Только после завершения SYNC-001 переходить к исправлению задвоения узлов.
+5. После подтверждения письма по реальному вечернему запуску выполнить уборку тестовых элементов.
+
+9. Следующие действия на завтра
+
+P1. Проверить, появился ли ZIP в ветке sync-001-v081. Если не появился — загрузить файл заново и обязательно нажать Commit changes.
+P1. Дождаться workflow SYNC-001 from uploaded v0.8.1 zip и проверить коммит SYNC-001: synchronize with v0.8.1 prototype.
+P1. Проверить PR #15 после автоматического коммита.
+P1. Убедиться, что dashboard, журнал и email-workflow не удалены после SYNC-001.
+P2. Проверить письмо по этой вечерней записи. Если письмо пришло — удалить тестовую запись и manual-test.yml.
+P2. После завершения SYNC-001 подготовить задачу на исправление задвоения узлов Чайва-Чайва → Чайва.
+P3. Вернуться к модулю «Управление проектами / Dashboard / Планировщик» как обязательной части MVP.</pre>
       </article>
     </section>
 
@@ -147,9 +131,9 @@
       <table>
         <thead><tr><th>ID</th><th>Статус</th><th>Результат</th><th>Следующий шаг</th></tr></thead>
         <tbody>
-          <tr><td>DASH-004</td><td><span class="badge ok">готово</span></td><td>Результаты плановых запусков вставлены в публичный и приватный HTML-dashboard.</td><td>Дальше подключить автоматическое обновление при каждом запуске.</td></tr>
-          <tr><td>SYNC-001</td><td><span class="badge">следующий этап</span></td><td>Полная синхронизация репозитория с актуальным прототипом v0.8.1.</td><td>Выполнить до DEV-005.</td></tr>
-          <tr><td>DEV-005</td><td><span class="badge bad">заблокировано</span></td><td>Не начинается до завершения SYNC-001.</td><td>Разблокировать после синхронизации.</td></tr>
+          <tr><td>SYNC-001</td><td><span class="badge warn">не завершен</span></td><td>PR #15 открыт, но ZIP пока не зафиксирован в ветке.</td><td>Загрузить ZIP и нажать Commit changes.</td></tr>
+          <tr><td>DEV-005</td><td><span class="badge bad">заблокирован</span></td><td>Запуск запрещен до завершения SYNC-001.</td><td>Не начинать.</td></tr>
+          <tr><td>DASH-004</td><td><span class="badge ok">работает</span></td><td>Dashboard и журнал обновлены вечерним контролем.</td><td>Проверить письмо по реальной записи.</td></tr>
         </tbody>
       </table>
     </section>
@@ -157,29 +141,20 @@
     <h2 id="artifacts">Актуальные артефакты</h2>
     <section class="panel">
       <ul>
-        <li><b>Прототип-источник:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix</li>
-        <li><b>Демо:</b> kipia_manager_demo_v0_5_5_nav_verified</li>
-        <li><b>Публичный dashboard:</b> spi-dashboard</li>
-        <li><b>Приватный MVP:</b> spi-replacement-kipia-mvp</li>
+        <li>Актуальный прототип: <b>kipia_mvp_prototype_v0_8_1_properties_sync_fix</b></li>
+        <li>Backend: FastAPI + SQLAlchemy + Alembic</li>
+        <li>Frontend: React/Vite</li>
+        <li>База данных: PostgreSQL-only, SQLite запрещен</li>
+        <li>Обязательный модуль: «Управление проектами / Dashboard / Планировщик»</li>
       </ul>
     </section>
 
-    <h2 id="bugs">Ошибки и контроль качества</h2>
+    <h2 id="cleanup">Почта и уборка</h2>
     <section class="panel">
-      <ul>
-        <li><span class="badge bad">исправить</span> Задвоение узлов: Чайва-Чайва → Чайва.</li>
-        <li><span class="badge warn">контроль</span> Проверять, что результаты плановых запусков попадают в HTML-dashboard.</li>
-        <li><span class="badge ok">учтено</span> v0.8.1: синхронизация правой панели свойств с выбранным прибором.</li>
-      </ul>
+      <p>Тестовое письмо пришло. Реальное письмо по этой вечерней записи будет проверяться после коммита в журнал. Уборка отложена: manual-test.yml и тестовая запись 16:50 пока сохранены.</p>
     </section>
 
-    <h2 id="links">Ссылки</h2>
-    <section class="panel links">
-      <a href="https://github.com/ivpetr168-hue/spi-dashboard">Публичный репозиторий dashboard</a>
-      <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
-    </section>
-
-    <div class="footer">Dashboard v0.6. В HTML добавлены результаты: 28.06.2026 19:56 — вечерний контроль; 29.06.2026 08:13 — утренний план.</div>
+    <div class="footer">Последнее обновление: 29.06.2026 22:02 — Вечерний контроль SPI.</div>
   </main>
 </body>
 </html>
