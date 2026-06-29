@@ -5,290 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SPI Dashboard</title>
   <style>
-    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --dark:#111827; --line:#e5e7eb; --blue:#2563eb; }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family: Arial, sans-serif; background:var(--bg); color:var(--text); }
+    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; --blue:#2563eb; }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:Arial, sans-serif; background:var(--bg); color:var(--text); }
     header { background:linear-gradient(135deg,#111827,#1f2937); color:white; padding:24px 18px; }
     header h1 { margin:0 0 8px 0; font-size:30px; }
     header p { margin:0; color:#d1d5db; line-height:1.45; }
     main { padding:16px; max-width:1180px; margin:0 auto; }
     nav { display:flex; gap:8px; overflow-x:auto; padding:10px 0; position:sticky; top:0; background:var(--bg); z-index:2; }
     nav a { white-space:nowrap; text-decoration:none; background:white; border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:#111827; }
-    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap:12px; margin:14px 0; }
-    .card, .panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:14px 0; }
+    .card,.panel { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
     .label { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .value { font-size:26px; font-weight:700; margin-bottom:6px; }
     h2 { margin:24px 0 12px; font-size:22px; }
-    h3 { margin:14px 0 8px; }
-    ol, ul { padding-left:22px; }
-    li { margin-bottom:9px; line-height:1.4; }
+    h3 { margin:18px 0 8px; }
+    ol,ul { padding-left:22px; }
+    li { margin-bottom:8px; line-height:1.4; }
     .badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#e0f2fe; color:#075985; font-size:12px; font-weight:700; }
-    .warn { background:#fef3c7; color:#92400e; }
     .ok { background:#dcfce7; color:#166534; }
+    .warn { background:#fef3c7; color:#92400e; }
     .bad { background:#fee2e2; color:#991b1b; }
     .muted { color:var(--muted); }
-    .timeline { border-left:3px solid var(--line); padding-left:14px; }
-    .timeline div { margin-bottom:12px; }
-    .links a { display:block; margin:8px 0; color:var(--blue); }
-    .table-wrap { overflow-x:auto; margin-top:12px; }
-    table { width:100%; border-collapse:collapse; min-width:900px; }
-    th, td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; line-height:1.35; }
-    th { background:#f9fafb; font-size:13px; color:#374151; }
-    .status-done { border-left:5px solid #22c55e; }
-    .status-work { border-left:5px solid #f59e0b; }
-    .status-next { border-left:5px solid #2563eb; }
-    .status-blocked { border-left:5px solid #ef4444; }
-    .progress { width:100%; height:10px; background:#e5e7eb; border-radius:999px; overflow:hidden; margin-top:8px; }
-    .progress span { display:block; height:100%; background:#2563eb; }
-    .small { font-size:13px; }
-    .run-list { display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px; }
-    .run { border:1px solid var(--line); border-radius:14px; padding:14px; background:#ffffff; }
-    .run .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
-    .run time { font-weight:700; }
-    .run-title { font-weight:700; margin-bottom:8px; }
+    .run { border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; margin:12px 0; }
+    .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+    time { font-weight:700; }
     .message { white-space:pre-line; line-height:1.45; background:#f9fafb; border:1px solid var(--line); border-radius:12px; padding:12px; }
+    .table-wrap { overflow-x:auto; margin-top:12px; }
+    table { width:100%; border-collapse:collapse; min-width:760px; }
+    th,td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; line-height:1.35; }
+    th { background:#f9fafb; font-size:13px; color:#374151; }
+    .links a { display:block; margin:8px 0; color:var(--blue); }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Панель управления проектом SPI Replacement / MVP КИПиА. Публичная страница без исходников приватного MVP.</p>
+    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. На странице показываются последние плановые запуски, статус задач и актуальные версии без раскрытия исходников приватного MVP.</p>
   </header>
   <main>
     <nav>
-      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#planned-runs">Запуски</a><a href="#task-results">План-факт</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
+      <a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#bugs">Ошибки</a><a href="#links">Ссылки</a>
     </nav>
 
     <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
-      <article class="card"><div class="label">Прототип</div><div class="value">v0.8.1</div><div>актуальный прототип-источник</div></article>
-      <article class="card"><div class="label">Демо</div><div class="value">v0.5.5</div><div>nav verified</div></article>
-      <article class="card"><div class="label">Backend</div><div class="value">DEV-004</div><div>SQLAlchemy модели</div></article>
-      <article class="card"><div class="label">Следующий этап</div><div class="value">SYNC</div><div>репозиторий ↔ прототип v0.8.1</div></article>
-      <article class="card"><div class="label">База данных</div><div class="value">PostgreSQL</div><div>SQLite запрещён</div></article>
+      <article class="card"><div class="label">Главный следующий этап</div><div class="value">SYNC-001</div><div>синхронизация репозитория с v0.8.1</div></article>
+      <article class="card"><div class="label">DEV-005</div><div class="value">Блок</div><div>не начинать до завершения SYNC-001</div></article>
+      <article class="card"><div class="label">Утренний план</div><div class="value">08:13</div><div>29.06.2026</div></article>
+      <article class="card"><div class="label">Вечерний контроль</div><div class="value">19:56</div><div>28.06.2026</div></article>
+      <article class="card"><div class="label">Dashboard</div><div class="value">v0.6</div><div>результаты запусков в HTML</div></article>
     </section>
 
-    <h2 id="priorities">Ближайшие приоритеты</h2>
+    <h2 id="runs">Результаты плановых запусков</h2>
     <section class="panel">
-      <ol>
-        <li><b>P1:</b> Закрыть/проверить PR DEV-004: SQLAlchemy модели.</li>
-        <li><b>P1:</b> После DEV-004 выполнить синхронизацию всего репозитория с актуальным прототипом v0.8.1.</li>
-        <li><b>P1:</b> Исправить задвоение наименований узлов: Чайва-Чайва должно отображаться как Чайва.</li>
-        <li><b>P1:</b> Разобраться с последним изменением, вынесенным в v0.8.1.</li>
-        <li><b>P2:</b> Ознакомиться со стратегическим документом.</li>
-        <li><b>P2:</b> Проверить сохранение утренних и вечерних запусков в журнал.</li>
-      </ol>
+      <p class="muted">Это не просто список задач. Здесь опубликованы текстовые результаты выполненных плановых заданий: дата, время, тип запуска и полный текст результата.</p>
+
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-29T08:13:00+11:00">29.06.2026 08:13</time><span class="badge ok">Утренний план SPI</span></div>
+        <div class="message">Сформирован утренний рабочий план по проекту SPI Replacement / MVP КИПиА.
+
+План на день:
+1. Исправить публикацию результатов плановых заданий в dashboard.
+Цель: чтобы в dashboard были видны не только статусы задач, но и полные текстовые результаты утреннего плана и вечернего контроля.
+Ожидаемый результат: в публичном и приватном HTML-dashboard есть раздел «Результаты плановых запусков».
+Приоритет: P1.
+Критерий готовности: видны записи «2026-06-28 19:56 — Вечерний контроль SPI» и «2026-06-29 08:13 — Утренний план SPI».
+
+2. Обновить настройки плановых заданий.
+Цель: будущие утренние и вечерние задания должны не только формировать текст, но и сохранять его в журнал и dashboard.
+Ожидаемый результат: промпты утреннего и вечернего задания содержат требование обновлять docs/spi-control-log.md, публичный dashboard и приватный dashboard.
+Приоритет: P1.
+Критерий готовности: задания обновлены и работают по точному расписанию.
+
+3. Сохранить правильную последовательность разработки.
+Цель: не начать DEV-005 до завершения SYNC-001.
+Ожидаемый результат: во всех dashboard и планах указано, что ближайшая главная задача — SYNC-001.
+Приоритет: P1.
+Критерий готовности: DEV-005 помечен как заблокированный до завершения SYNC-001.
+
+4. Проверить актуальные артефакты.
+Цель: не потерять текущую версию прототипа и демо.
+Ожидаемый результат: в dashboard указаны kipia_mvp_prototype_v0_8_1_properties_sync_fix и kipia_manager_demo_v0_5_5_nav_verified.
+Приоритет: P2.
+Критерий готовности: версии видны в dashboard и журнале.
+
+5. Проверить уведомления.
+Цель: обеспечить получение результатов плановых заданий пользователем.
+Ожидаемый результат: определить, можно ли включить уведомления через доступные инструменты; если нельзя — зафиксировать ограничение и дать ручной способ включения.
+Приоритет: P1.
+Критерий готовности: статус уведомлений явно указан.
+
+Что проверить вечером:
+1. Появились ли результаты плановых запусков в публичном dashboard.
+2. Появились ли результаты плановых запусков в приватном dashboard.
+3. Обновился ли docs/spi-control-log.md.
+4. Не начат ли DEV-005 до завершения SYNC-001.
+5. Не потерялось ли архитектурное решение по модулю «Управление проектами / Dashboard / Планировщик».</div>
+      </article>
+
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-28T19:56:00+11:00">28.06.2026 19:56</time><span class="badge warn">Вечерний контроль SPI</span></div>
+        <div class="message">Проведен вечерний контроль по проекту SPI Replacement / MVP КИПиА.
+
+Сделано за день:
+1. Подтверждено текущее состояние проекта: основной следующий этап после DEV-004 — SYNC-001.
+2. Зафиксирован актуальный прототип-источник: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
+3. Подтверждено архитектурное правило: Production — Linux + PostgreSQL; Backend — FastAPI + SQLAlchemy + Alembic; Frontend — React/Vite; интерфейс русский с готовностью к мультиязычности.
+4. Зафиксировано обязательное включение модуля «Управление проектами / Dashboard / Планировщик» во все следующие документы, прототипы и dashboard.
+5. Создана основа журнала запусков docs/spi-control-log.md.
+
+Не выполнено:
+1. SYNC-001 еще не выполнен.
+2. DEV-005 не начат и должен оставаться заблокированным до завершения SYNC-001.
+3. Исправление задвоения узлов типа «Чайва-Чайва → Чайва» еще не внесено в актуальный прототип.
+4. Текстовые результаты утреннего и вечернего задания еще не отображались в dashboard как часть HTML-файла.
+
+Ошибки и замечания:
+1. Результаты плановых заданий не были автоматически опубликованы в публичный и приватный dashboard.
+2. Включенные задания существовали, но уведомления были отключены.
+3. Нужно явно показывать в dashboard не только статусы задач, но и текстовые сообщения запусков с датой и временем.
+
+Актуальные версии:
+- Актуальный прототип: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
+- Последнее демо: kipia_manager_demo_v0_5_5_nav_verified.
+- Публичный dashboard: spi-dashboard.
+- Приватный MVP-репозиторий: spi-replacement-kipia-mvp.
+
+Перенос на следующий день:
+1. Внести результаты вчерашнего вечернего контроля и сегодняшнего утреннего плана в оба dashboard.
+2. Обновить задания так, чтобы будущие результаты записывались в журнал и HTML-dashboard.
+3. Сохранить SYNC-001 как ближайшую главную задачу.
+4. Не начинать DEV-005 до завершения SYNC-001.</div>
+      </article>
     </section>
 
-    <h2 id="planned-runs">Результаты плановых запусков</h2>
-    <section class="panel">
-      <p class="muted">Здесь должны отображаться именно текстовые результаты утреннего планирования и вечернего контроля: дата, время, тип задания и сообщение.</p>
-      <div class="run-list">
-        <article class="run">
-          <div class="meta">
-            <time datetime="2026-06-29T07:10:00">29.06.2026 07:10</time>
-            <span class="badge ok">утренний план</span>
-          </div>
-          <div class="run-title">Текстовое сообщение о планах на день</div>
-          <div class="message">План на день:
-1. Проверить, что публичный dashboard открывается с телефона и показывает новые разделы.
-2. Зафиксировать, что следующий обязательный этап проекта — SYNC-001.
-3. Подготовить синхронизацию приватного репозитория с актуальным прототипом kipia_mvp_prototype_v0_8_1_properties_sync_fix.
-4. DEV-005 не начинать до завершения SYNC-001.
-5. При всех изменениях сохранить PostgreSQL-only и не потерять исправление v0.8.1: синхронизация правой панели свойств с выбранным прибором.</div>
-        </article>
-        <article class="run">
-          <div class="meta">
-            <time datetime="2026-06-29T20:10:00">29.06.2026 20:10</time>
-            <span class="badge warn">вечерний контроль</span>
-          </div>
-          <div class="run-title">Текстовое сообщение о результатах дня</div>
-          <div class="message">Результат вечернего контроля пока не зафиксирован автоматически.
-Ожидаемый формат записи:
-1. Что было сделано за день.
-2. Что не выполнено.
-3. Причина невыполнения.
-4. Что переносится на следующий день.
-5. Что меняется в плане SYNC-001 / DEV-005.</div>
-        </article>
-      </div>
-    </section>
-
-    <h2 id="task-results">План-факт выполнения задач</h2>
-    <section class="grid">
-      <article class="card"><div class="label">Выполнено</div><div class="value">5</div><div>DEV-001, DEV-002, DEV-003, DASH-002, DASH-003</div></article>
-      <article class="card"><div class="label">В работе / проверка</div><div class="value">1</div><div>DEV-004</div></article>
-      <article class="card"><div class="label">Следующий обязательный этап</div><div class="value">1</div><div>SYNC-001</div></article>
-      <article class="card"><div class="label">Заблокировано до SYNC</div><div class="value">1</div><div>DEV-005</div></article>
-    </section>
-    <section class="panel">
-      <p class="muted">Этот раздел показывает общий статус задач. Текстовые результаты утреннего и вечернего задания вынесены выше, в раздел «Результаты плановых запусков».</p>
-      <div class="progress"><span style="width:63%"></span></div>
-      <p class="small muted">Ориентировочная готовность текущего короткого плана: 5 из 8 задач закрыты или отражены в dashboard.</p>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Запланированная задача</th>
-              <th>Статус</th>
-              <th>Фактический результат</th>
-              <th>Подтверждение / контроль</th>
-              <th>Следующий шаг</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="status-done">
-              <td><b>DEV-001</b></td>
-              <td>Создать стартовую структуру проекта.</td>
-              <td><span class="badge ok">готово</span></td>
-              <td>Подготовлен базовый каркас backend/frontend и структура приватного MVP-репозитория.</td>
-              <td>Репозиторий MVP существует; дальнейшие задачи ведутся поверх этой структуры.</td>
-              <td>Поддерживать структуру при синхронизации с v0.8.1.</td>
-            </tr>
-            <tr class="status-done">
-              <td><b>DEV-002</b></td>
-              <td>Настроить PostgreSQL как целевую БД.</td>
-              <td><span class="badge ok">готово</span></td>
-              <td>PostgreSQL принят как обязательная БД прототипа и MVP; SQLite не используется.</td>
-              <td>В dashboard и архитектуре зафиксировано правило: PostgreSQL-only.</td>
-              <td>Проверять, что новые версии не возвращают SQLite.</td>
-            </tr>
-            <tr class="status-done">
-              <td><b>DEV-003</b></td>
-              <td>Создать Alembic-миграции.</td>
-              <td><span class="badge ok">готово</span></td>
-              <td>Схема БД должна управляться миграциями, а не ручными изменениями.</td>
-              <td>Следующие изменения БД принимать только через Alembic.</td>
-              <td>При SYNC-001 сверить миграции с фактическим прототипом v0.8.1.</td>
-            </tr>
-            <tr class="status-work">
-              <td><b>DEV-004</b></td>
-              <td>Создать SQLAlchemy ORM-модели.</td>
-              <td><span class="badge warn">проверка</span></td>
-              <td>Требуется закрыть/проверить PR и убедиться, что модели соответствуют текущей схеме PostgreSQL.</td>
-              <td>Контроль: ORM-модели должны соответствовать миграциям и таблицам MVP.</td>
-              <td>После подтверждения DEV-004 перейти к SYNC-001.</td>
-            </tr>
-            <tr class="status-next">
-              <td><b>SYNC-001</b></td>
-              <td>Полностью синхронизировать репозиторий с актуальным прототипом v0.8.1.</td>
-              <td><span class="badge">следующий этап</span></td>
-              <td>Ожидаемый результат: приватный репозиторий соответствует kipia_mvp_prototype_v0_8_1_properties_sync_fix.</td>
-              <td>Контроль: сохранено исправление синхронизации правой панели свойств с выбранным прибором.</td>
-              <td>Выполнить до начала DEV-005.</td>
-            </tr>
-            <tr class="status-blocked">
-              <td><b>DEV-005</b></td>
-              <td>Создать CRUD/API производственной структуры.</td>
-              <td><span class="badge bad">заблокировано</span></td>
-              <td>Задача сознательно не начинается до завершения SYNC-001.</td>
-              <td>Контроль: не начинать разработку API поверх несинхронизированного репозитория.</td>
-              <td>Разблокировать только после SYNC-001.</td>
-            </tr>
-            <tr class="status-done">
-              <td><b>DASH-002</b></td>
-              <td>Показать результаты выполнения запланированных задач на публичном dashboard.</td>
-              <td><span class="badge ok">готово</span></td>
-              <td>Добавлен раздел «План-факт выполнения задач» со статусами, результатами, контролем и следующими шагами.</td>
-              <td>Публичный dashboard теперь показывает не только планы, но и фактическое состояние задач.</td>
-              <td>Дальше добавлять журнал запусков, версии документов и процент готовности проекта.</td>
-            </tr>
-            <tr class="status-done">
-              <td><b>DASH-003</b></td>
-              <td>Показывать текстовые результаты утреннего и вечернего планового задания.</td>
-              <td><span class="badge ok">готово</span></td>
-              <td>Добавлен раздел «Результаты плановых запусков» с датой, временем, типом задания и текстом сообщения.</td>
-              <td>Записи отображаются в формате: дата/время → тип запуска → текстовое сообщение.</td>
-              <td>Подключить автоматическое обновление записей из журнала запусков.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <h2 id="tasks">План-факт задач</h2>
+    <section class="panel table-wrap">
+      <table>
+        <thead><tr><th>ID</th><th>Статус</th><th>Результат</th><th>Следующий шаг</th></tr></thead>
+        <tbody>
+          <tr><td>DASH-004</td><td><span class="badge ok">готово</span></td><td>Результаты плановых запусков вставлены в публичный и приватный HTML-dashboard.</td><td>Дальше подключить автоматическое обновление при каждом запуске.</td></tr>
+          <tr><td>SYNC-001</td><td><span class="badge">следующий этап</span></td><td>Полная синхронизация репозитория с актуальным прототипом v0.8.1.</td><td>Выполнить до DEV-005.</td></tr>
+          <tr><td>DEV-005</td><td><span class="badge bad">заблокировано</span></td><td>Не начинается до завершения SYNC-001.</td><td>Разблокировать после синхронизации.</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <h2 id="artifacts">Актуальные артефакты</h2>
     <section class="panel">
       <ul>
-        <li><b>Прототип-источник для синхронизации:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip</li>
-        <li><b>Демо:</b> kipia_manager_demo_v0_5_5_nav_verified.zip</li>
-        <li><b>Стратегический документ:</b> Контур_КИПиА_стратегические_варианты_развития_v0_2_исправлено.docx</li>
+        <li><b>Прототип-источник:</b> kipia_mvp_prototype_v0_8_1_properties_sync_fix</li>
+        <li><b>Демо:</b> kipia_manager_demo_v0_5_5_nav_verified</li>
+        <li><b>Публичный dashboard:</b> spi-dashboard</li>
         <li><b>Приватный MVP:</b> spi-replacement-kipia-mvp</li>
-        <li><b>Публичный Dashboard:</b> spi-dashboard</li>
       </ul>
-    </section>
-
-    <h2 id="development">Разработка</h2>
-    <section class="grid">
-      <article class="card"><div class="label">DEV-001</div><div class="value">✅</div><div>Стартовая структура проекта</div></article>
-      <article class="card"><div class="label">DEV-002</div><div class="value">✅</div><div>PostgreSQL</div></article>
-      <article class="card"><div class="label">DEV-003</div><div class="value">✅</div><div>Alembic миграции</div></article>
-      <article class="card"><div class="label">DEV-004</div><div class="value">⏳</div><div>SQLAlchemy модели</div></article>
-      <article class="card"><div class="label">SYNC-001</div><div class="value">Далее</div><div>Синхронизация репозитория с прототипом v0.8.1</div></article>
-      <article class="card"><div class="label">DEV-005</div><div class="value">После sync</div><div>CRUD/API по синхронизированной базе</div></article>
-    </section>
-
-    <h2 id="journal">Контроль и журнал</h2>
-    <section class="panel">
-      <ul>
-        <li><span class="badge ok">готово</span> Создан журнал запусков в приватном GitHub.</li>
-        <li><span class="badge ok">готово</span> Настроена утренняя задача SPI.</li>
-        <li><span class="badge ok">готово</span> Настроена вечерняя задача SPI.</li>
-        <li><span class="badge ok">готово</span> Создан публичный dashboard для телефона.</li>
-        <li><span class="badge ok">готово</span> Добавлен публичный план-факт выполнения задач.</li>
-        <li><span class="badge ok">готово</span> Добавлен раздел текстовых результатов утреннего и вечернего задания.</li>
-        <li><span class="badge warn">следующий шаг</span> Подключить автоматическую публикацию последних записей из журнала запусков.</li>
-      </ul>
-      <div class="timeline">
-        <div><b>2026-06-28</b> — создан журнал и GitHub Actions.</div>
-        <div><b>2026-06-29</b> — добавлен раздел результатов выполнения запланированных задач.</div>
-        <div><b>2026-06-29</b> — добавлен раздел «Результаты плановых запусков» с форматом утро/вечер.</div>
-        <div><b>После DEV-004</b> — синхронизировать репозиторий с прототипом v0.8.1.</div>
-      </div>
     </section>
 
     <h2 id="bugs">Ошибки и контроль качества</h2>
     <section class="panel">
       <ul>
         <li><span class="badge bad">исправить</span> Задвоение узлов: Чайва-Чайва → Чайва.</li>
-        <li><span class="badge warn">контроль</span> Проверять, что старые ошибки интерфейса не возвращаются.</li>
-        <li><span class="badge ok">учтено</span> v0.8.1 синхронизация правой панели свойств с выбранным прибором.</li>
-        <li><span class="badge ok">правило</span> Каждая новая версия должна иметь увеличенный номер.</li>
+        <li><span class="badge warn">контроль</span> Проверять, что результаты плановых запусков попадают в HTML-dashboard.</li>
+        <li><span class="badge ok">учтено</span> v0.8.1: синхронизация правой панели свойств с выбранным прибором.</li>
       </ul>
     </section>
 
-    <h2 id="team">Команда</h2>
-    <section class="panel">
-      <p><b>Текущий режим:</b> подготовка проекта до появления команды.</p>
-      <ul>
-        <li>Руководитель/архитектор проекта: Алексей.</li>
-        <li>Backend: FastAPI, SQLAlchemy, Alembic, PostgreSQL.</li>
-        <li>Frontend: React/Vite, русская локализация, готовность к мультиязычности.</li>
-        <li>DevOps: Docker, GitHub Actions.</li>
-        <li>Миграция: извлечение данных из SPI / Oracle и загрузка в PostgreSQL.</li>
-      </ul>
-    </section>
-
-    <h2 id="management">Для руководства</h2>
-    <section class="panel">
-      <ul>
-        <li>Цель: замена SmartPlant Instrumentation с сохранением инженерных данных КИПиА.</li>
-        <li>Демо должно показывать карточки приборов, спецификации, контуры и навигацию по объектам.</li>
-        <li>SPI после миграции остаётся read-only.</li>
-        <li>Чертежи не должны превращаться в ручной PDF-процесс.</li>
-        <li>Публичный dashboard можно использовать как витрину статуса, без раскрытия исходников.</li>
-      </ul>
-    </section>
-
-    <h2>Ссылки</h2>
+    <h2 id="links">Ссылки</h2>
     <section class="panel links">
       <a href="https://github.com/ivpetr168-hue/spi-dashboard">Публичный репозиторий dashboard</a>
       <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
     </section>
 
-    <div class="footer">Dashboard v0.5. Добавлен раздел текстовых результатов плановых запусков: утренний план и вечерний контроль с датой, временем и сообщением.</div>
+    <div class="footer">Dashboard v0.6. В HTML добавлены результаты: 28.06.2026 19:56 — вечерний контроль; 29.06.2026 08:13 — утренний план.</div>
   </main>
 </body>
 </html>
