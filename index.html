@@ -41,6 +41,12 @@
     .progress { width:100%; height:10px; background:#e5e7eb; border-radius:999px; overflow:hidden; margin-top:8px; }
     .progress span { display:block; height:100%; background:#2563eb; }
     .small { font-size:13px; }
+    .run-list { display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px; }
+    .run { border:1px solid var(--line); border-radius:14px; padding:14px; background:#ffffff; }
+    .run .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
+    .run time { font-weight:700; }
+    .run-title { font-weight:700; margin-bottom:8px; }
+    .message { white-space:pre-line; line-height:1.45; background:#f9fafb; border:1px solid var(--line); border-radius:12px; padding:12px; }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
@@ -51,7 +57,7 @@
   </header>
   <main>
     <nav>
-      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#task-results">План-факт</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
+      <a href="#summary">Сводка</a><a href="#priorities">Приоритеты</a><a href="#planned-runs">Запуски</a><a href="#task-results">План-факт</a><a href="#artifacts">Артефакты</a><a href="#development">Разработка</a><a href="#journal">Журнал</a><a href="#bugs">Ошибки</a><a href="#team">Команда</a><a href="#management">Руководство</a>
     </nav>
 
     <h2 id="summary">Сводка</h2>
@@ -76,17 +82,51 @@
       </ol>
     </section>
 
+    <h2 id="planned-runs">Результаты плановых запусков</h2>
+    <section class="panel">
+      <p class="muted">Здесь должны отображаться именно текстовые результаты утреннего планирования и вечернего контроля: дата, время, тип задания и сообщение.</p>
+      <div class="run-list">
+        <article class="run">
+          <div class="meta">
+            <time datetime="2026-06-29T07:10:00">29.06.2026 07:10</time>
+            <span class="badge ok">утренний план</span>
+          </div>
+          <div class="run-title">Текстовое сообщение о планах на день</div>
+          <div class="message">План на день:
+1. Проверить, что публичный dashboard открывается с телефона и показывает новые разделы.
+2. Зафиксировать, что следующий обязательный этап проекта — SYNC-001.
+3. Подготовить синхронизацию приватного репозитория с актуальным прототипом kipia_mvp_prototype_v0_8_1_properties_sync_fix.
+4. DEV-005 не начинать до завершения SYNC-001.
+5. При всех изменениях сохранить PostgreSQL-only и не потерять исправление v0.8.1: синхронизация правой панели свойств с выбранным прибором.</div>
+        </article>
+        <article class="run">
+          <div class="meta">
+            <time datetime="2026-06-29T20:10:00">29.06.2026 20:10</time>
+            <span class="badge warn">вечерний контроль</span>
+          </div>
+          <div class="run-title">Текстовое сообщение о результатах дня</div>
+          <div class="message">Результат вечернего контроля пока не зафиксирован автоматически.
+Ожидаемый формат записи:
+1. Что было сделано за день.
+2. Что не выполнено.
+3. Причина невыполнения.
+4. Что переносится на следующий день.
+5. Что меняется в плане SYNC-001 / DEV-005.</div>
+        </article>
+      </div>
+    </section>
+
     <h2 id="task-results">План-факт выполнения задач</h2>
     <section class="grid">
-      <article class="card"><div class="label">Выполнено</div><div class="value">4</div><div>DEV-001, DEV-002, DEV-003, DASH-002</div></article>
+      <article class="card"><div class="label">Выполнено</div><div class="value">5</div><div>DEV-001, DEV-002, DEV-003, DASH-002, DASH-003</div></article>
       <article class="card"><div class="label">В работе / проверка</div><div class="value">1</div><div>DEV-004</div></article>
       <article class="card"><div class="label">Следующий обязательный этап</div><div class="value">1</div><div>SYNC-001</div></article>
       <article class="card"><div class="label">Заблокировано до SYNC</div><div class="value">1</div><div>DEV-005</div></article>
     </section>
     <section class="panel">
-      <p class="muted">Раздел показывает не только список запланированных задач, но и фактический результат: что получено, чем подтверждается и какой следующий шаг нужен.</p>
-      <div class="progress"><span style="width:57%"></span></div>
-      <p class="small muted">Ориентировочная готовность текущего короткого плана: 4 из 7 задач закрыты или отражены в dashboard.</p>
+      <p class="muted">Этот раздел показывает общий статус задач. Текстовые результаты утреннего и вечернего задания вынесены выше, в раздел «Результаты плановых запусков».</p>
+      <div class="progress"><span style="width:63%"></span></div>
+      <p class="small muted">Ориентировочная готовность текущего короткого плана: 5 из 8 задач закрыты или отражены в dashboard.</p>
       <div class="table-wrap">
         <table>
           <thead>
@@ -156,6 +196,14 @@
               <td>Публичный dashboard теперь показывает не только планы, но и фактическое состояние задач.</td>
               <td>Дальше добавлять журнал запусков, версии документов и процент готовности проекта.</td>
             </tr>
+            <tr class="status-done">
+              <td><b>DASH-003</b></td>
+              <td>Показывать текстовые результаты утреннего и вечернего планового задания.</td>
+              <td><span class="badge ok">готово</span></td>
+              <td>Добавлен раздел «Результаты плановых запусков» с датой, временем, типом задания и текстом сообщения.</td>
+              <td>Записи отображаются в формате: дата/время → тип запуска → текстовое сообщение.</td>
+              <td>Подключить автоматическое обновление записей из журнала запусков.</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -190,11 +238,13 @@
         <li><span class="badge ok">готово</span> Настроена вечерняя задача SPI.</li>
         <li><span class="badge ok">готово</span> Создан публичный dashboard для телефона.</li>
         <li><span class="badge ok">готово</span> Добавлен публичный план-факт выполнения задач.</li>
-        <li><span class="badge warn">проверить утром</span> Автозапись отчёта в журнал и обновление HTML.</li>
+        <li><span class="badge ok">готово</span> Добавлен раздел текстовых результатов утреннего и вечернего задания.</li>
+        <li><span class="badge warn">следующий шаг</span> Подключить автоматическую публикацию последних записей из журнала запусков.</li>
       </ul>
       <div class="timeline">
         <div><b>2026-06-28</b> — создан журнал и GitHub Actions.</div>
         <div><b>2026-06-29</b> — добавлен раздел результатов выполнения запланированных задач.</div>
+        <div><b>2026-06-29</b> — добавлен раздел «Результаты плановых запусков» с форматом утро/вечер.</div>
         <div><b>После DEV-004</b> — синхронизировать репозиторий с прототипом v0.8.1.</div>
       </div>
     </section>
@@ -238,7 +288,7 @@
       <a href="https://github.com/ivpetr168-hue/spi-replacement-kipia-mvp">Приватный репозиторий MVP</a>
     </section>
 
-    <div class="footer">Dashboard v0.4. Добавлен план-факт выполнения задач: видны запланированные задачи, фактические результаты, контроль и следующие шаги.</div>
+    <div class="footer">Dashboard v0.5. Добавлен раздел текстовых результатов плановых запусков: утренний план и вечерний контроль с датой, временем и сообщением.</div>
   </main>
 </body>
 </html>
