@@ -19,6 +19,7 @@
     .label { color:var(--muted); font-size:13px; margin-bottom:8px; }
     .value { font-size:26px; font-weight:700; margin-bottom:6px; }
     h2 { margin:24px 0 12px; font-size:22px; }
+    h3 { margin:12px 0 8px; font-size:17px; }
     .badge { display:inline-block; padding:4px 8px; border-radius:999px; background:#e0f2fe; color:#075985; font-size:12px; font-weight:700; }
     .ok { background:#dcfce7; color:#166534; }
     .warn { background:#fef3c7; color:#92400e; }
@@ -32,45 +33,90 @@
     th,td { border:1px solid var(--line); padding:10px; text-align:left; vertical-align:top; line-height:1.35; }
     th { background:#f9fafb; font-size:13px; color:#374151; }
     .table-wrap { overflow-x:auto; }
+    ul { margin:8px 0 0 20px; padding:0; line-height:1.45; }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает статус задач и актуальные версии без раскрытия приватных исходников.</p>
+    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает актуальную версию, план, контрольные проверки и журнал работы без раскрытия приватных исходников.</p>
   </header>
   <main>
-    <nav><a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#rules">Правила проверки</a><a href="#cleanup">Уборка</a></nav>
+    <nav>
+      <a href="#summary">Сводка</a>
+      <a href="#journal">Журнал</a>
+      <a href="#tasks">Задачи</a>
+      <a href="#checks">Проверки</a>
+      <a href="#rules">Правила</a>
+      <a href="#next">Следующий шаг</a>
+    </nav>
 
     <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
-      <article class="card"><div class="label">SYNC-001</div><div class="value">Готово</div><div>main синхронизирован с v0.8.1</div></article>
-      <article class="card"><div class="label">Главный следующий этап</div><div class="value">DEV-005</div><div>можно планировать</div></article>
-      <article class="card"><div class="label">DEV-005</div><div class="value">Разблокирован</div><div>после проверки SYNC-001</div></article>
-      <article class="card"><div class="label">Прототип</div><div class="value">0.8.1</div><div>properties-sync-fix</div></article>
-      <article class="card"><div class="label">Dashboard</div><div class="value">v0.8</div><div>обновлен после SYNC-001</div></article>
+      <article class="card"><div class="label">Актуальная версия</div><div class="value">0.8.4_fix2</div><div>main и фиксированная ветка совпадают</div></article>
+      <article class="card"><div class="label">Ветка main</div><div class="value">0.8.4_fix2</div><div>рабочая база проекта</div></article>
+      <article class="card"><div class="label">Фиксированная ветка</div><div class="value">v0.8.4_fix2</div><div>версия зафиксирована</div></article>
+      <article class="card"><div class="label">Следующий этап</div><div class="value">v0.8.5</div><div>реальные отчёты из PostgreSQL</div></article>
+      <article class="card"><div class="label">Dashboard</div><div class="value">Journal</div><div>публичный журнал работы</div></article>
     </section>
 
-    <h2 id="runs">Результаты проверок</h2>
+    <section class="panel">
+      <h3>Техническое состояние</h3>
+      <ul>
+        <li>Текущая рабочая версия прототипа: <b>0.8.4_fix2</b>.</li>
+        <li>main = <b>0.8.4_fix2</b>.</li>
+        <li>Фиксированная ветка = <b>v0.8.4_fix2</b>.</li>
+        <li>commit main/v0.8.4_fix2: <code>d281be425cc13aa162c8a4e5018d08dec2201d9a</code>.</li>
+        <li>README commit: <code>049c54b638decf237003570e03a1c76210e7ecef</code>.</li>
+        <li>БД: PostgreSQL-only. SQLite не использовать.</li>
+        <li>Stack: FastAPI + SQLAlchemy + Alembic + PostgreSQL + React/Vite.</li>
+        <li>Development: Windows + Docker Desktop.</li>
+        <li>Production target: Linux + PostgreSQL.</li>
+      </ul>
+    </section>
+
+    <h2 id="journal">Журнал работы</h2>
     <section class="panel">
       <article class="run">
-        <div class="meta"><time datetime="2026-06-30T10:40:00+11:00">30.06.2026 10:40</time><span class="badge ok">SYNC-001 завершён</span></div>
-        <pre class="message">SYNC-001 практически завершён.
+        <div class="meta"><time datetime="2026-06-30T18:42:00+11:00">30.06.2026 18:42 Asia/Magadan</time><span class="badge ok">dashboard обновлён</span></div>
+        <pre class="message">Публичный dashboard обновлён под актуальную рабочую базу 0.8.4_fix2.
 
-Проверено:
-1. PR #15 слит в main.
-2. Свежий main скачан из GitHub.
-3. Локальный запуск через Docker выполнен.
-4. PostgreSQL работает.
-5. Backend работает.
-6. Swagger открывается.
-7. Интерфейс КИПиА MVP открывается.
-8. Узел «Индекс приборов» проверен.
-9. Выбор прибора под «Индекс приборов» открывает карточку прибора.
-10. Правая панель «Свойства» синхронизируется с выбранным прибором.
-11. Пользователь подтвердил: «все проверил все работает».</pre>
+Что изменено:
+1. Удалён устаревший текущий контекст v0.8.1 / SYNC-001 / DEV-005 как актуальный статус.
+2. Зафиксирована актуальная версия: 0.8.4_fix2.
+3. Следующий этап установлен как v0.8.5.
+4. Добавлен режим dashboard как публичного журнала работы проекта.
+5. Добавлена информация из вечерней и утренней задач.
+6. Добавлено правило: обновлять dashboard при каждой новой версии или fix проекта.
+7. Добавлены дата и время выполнения обновления.</pre>
+      </article>
+
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-30T18:30:00+11:00">30.06.2026 18:30 Asia/Magadan</time><span class="badge ok">задачи обновлены</span></div>
+        <pre class="message">Обновлены две запланированные задачи:
+1. SPI Вечерний Контроль v4.
+2. SPI Утренний План v3.
+
+В задачи внесено:
+- актуальная база 0.8.4_fix2;
+- следующий этап v0.8.5;
+- запрет использовать v0.8.1 / SYNC-001 / DEV-005 как актуальный контекст;
+- правило работы по одному шагу;
+- правило обновления публичного dashboard при версии/fix;
+- состояние Gmail, browser и phone уведомлений.</pre>
+      </article>
+
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-30T18:20:00+11:00">30.06.2026 18:20 Asia/Magadan</time><span class="badge ok">уведомления проверены</span></div>
+        <pre class="message">Проверка уведомлений:
+1. Gmail-доставка из текущего чата работает.
+2. Письмо с реальным вечерним отчётом пришло.
+3. Browser permission для chatgpt.com включён.
+4. В настройках самой задачи отдельный переключатель уведомлений не найден.
+5. Phone notification работает: уведомление ChatGPT/chatgpt.com пришло на телефон после ручного запуска.
+6. Остался главный тест: автоматический запуск в 22:00 Asia/Magadan без ручного запуска.</pre>
       </article>
     </section>
 
@@ -79,41 +125,64 @@
       <table>
         <thead><tr><th>ID</th><th>Статус</th><th>Результат</th><th>Следующий шаг</th></tr></thead>
         <tbody>
-          <tr><td>SYNC-001</td><td><span class="badge ok">завершён</span></td><td>PR #15 слит в main. Свежий main запущен локально через Docker и проверен.</td><td>Использовать main как базовую точку разработки.</td></tr>
-          <tr><td>DEV-005</td><td><span class="badge warn">можно планировать</span></td><td>Блокировка снята после завершения SYNC-001.</td><td>Определить точный состав DEV-005.</td></tr>
-          <tr><td>DASH-004</td><td><span class="badge ok">работает</span></td><td>Dashboard обновлён после завершения SYNC-001.</td><td>Проверить публикацию GitHub Pages.</td></tr>
+          <tr>
+            <td>REL-0.8.4_fix2</td>
+            <td><span class="badge ok">актуально</span></td>
+            <td>main = 0.8.4_fix2, фиксированная ветка = v0.8.4_fix2.</td>
+            <td>Не менять main без подтверждения пользователя.</td>
+          </tr>
+          <tr>
+            <td>REPORT-v0.8.5</td>
+            <td><span class="badge warn">следующий этап</span></td>
+            <td>Цель: первые реальные отчёты Specification, Process Data, Cable Schedule из PostgreSQL.</td>
+            <td>Сначала подготовить список изменений. Код не менять без явной команды.</td>
+          </tr>
+          <tr>
+            <td>AUTO-EVENING</td>
+            <td><span class="badge warn">нужна проверка</span></td>
+            <td>Ручной запуск дал Gmail-письмо и уведомление на телефон.</td>
+            <td>Проверить автоматический запуск в 22:00 Asia/Magadan.</td>
+          </tr>
+          <tr>
+            <td>DASHBOARD-JOURNAL</td>
+            <td><span class="badge ok">включено</span></td>
+            <td>Публичный dashboard переведён в формат журнала работы.</td>
+            <td>Обновлять при каждой новой версии или fix проекта.</td>
+          </tr>
         </tbody>
       </table>
     </section>
 
-    <h2 id="artifacts">Актуальные артефакты</h2>
+    <h2 id="checks">Проверки</h2>
+    <section class="grid">
+      <article class="card"><div class="label">Gmail-доставка</div><div class="value">OK</div><span class="badge ok">письмо пришло</span></article>
+      <article class="card"><div class="label">Browser permission</div><div class="value">OK</div><span class="badge ok">chatgpt.com разрешён</span></article>
+      <article class="card"><div class="label">Phone notification</div><div class="value">OK</div><span class="badge ok">уведомление пришло</span></article>
+      <article class="card"><div class="label">Automation 22:00</div><div class="value">WAIT</div><span class="badge warn">ждём автозапуск</span></article>
+    </section>
+
+    <h2 id="rules">Правила ведения проекта</h2>
     <section class="panel">
       <ul>
-        <li>Актуальный прототип: <b>kipia_mvp_prototype_v0_8_1_properties_sync_fix</b></li>
-        <li>Версия приложения: <b>0.8.1-properties-sync-fix</b></li>
-        <li>Базовая ветка разработки: <b>main после PR #15</b></li>
-        <li>Backend: FastAPI + SQLAlchemy + Alembic</li>
-        <li>Frontend: React/Vite</li>
-        <li>База данных: PostgreSQL-only, SQLite запрещен</li>
+        <li>Работать на русском языке.</li>
+        <li>Технические имена БД, API, файлов и классов — English.</li>
+        <li>PostgreSQL-only. SQLite не использовать.</li>
+        <li>Изменения схемы БД — только через Alembic.</li>
+        <li>main всегда должен оставаться рабочим.</li>
+        <li>Новую версию или fix не создавать без явной команды пользователя.</li>
+        <li>Перед новой версией сначала показать полный список изменений.</li>
+        <li>Публичный dashboard обновлять при каждой новой версии или fix проекта.</li>
+        <li>Публичный dashboard использовать как журнал работы с датой и временем выполнения.</li>
       </ul>
     </section>
 
-    <h2 id="rules">Правила проверки интерфейса</h2>
+    <h2 id="next">Следующий шаг</h2>
     <section class="panel">
-      <p>При проверке интерфейса нужно писать точные видимые надписи так, как они отображаются на экране.</p>
-      <ul>
-        <li>Если на экране написано «Индекс приборов», использовать «Индекс приборов».</li>
-        <li>Если на экране написано «Свойства», использовать «Свойства».</li>
-        <li>Не заменять русскую надпись английским термином.</li>
-      </ul>
+      <p><b>Один следующий шаг:</b> дождаться автоматического запуска задачи <b>SPI Вечерний Контроль v4</b> в 22:00 Asia/Magadan и проверить, пришли ли письмо и уведомление без ручного запуска.</p>
+      <p class="muted">После подтверждения автоматического запуска можно переходить к подготовке списка изменений для v0.8.5.</p>
     </section>
 
-    <h2 id="cleanup">Уборка</h2>
-    <section class="panel">
-      <p>Старые локальные архивы и папки не удалять до отдельной уборки. Ветку sync-001-v081 можно удалить позже, после проверки dashboard и отсутствия необходимости отката.</p>
-    </section>
-
-    <div class="footer">Последнее обновление: 30.06.2026 10:40 — SYNC-001 завершён после локальной проверки main.</div>
+    <div class="footer">Последнее обновление dashboard: 30.06.2026 18:42 Asia/Magadan. Commit выполняется в репозитории ivpetr168-hue/spi-dashboard, branch main.</div>
   </main>
 </body>
 </html>
