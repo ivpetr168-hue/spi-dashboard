@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SPI Dashboard</title>
   <style>
-    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; --blue:#2563eb; }
+    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; }
     * { box-sizing:border-box; }
     body { margin:0; font-family:Arial, sans-serif; background:var(--bg); color:var(--text); }
     header { background:linear-gradient(135deg,#111827,#1f2937); color:white; padding:24px 18px; }
@@ -38,91 +38,39 @@
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает последние плановые запуски, статус задач и актуальные версии без раскрытия приватных исходников.</p>
+    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает статус задач и актуальные версии без раскрытия приватных исходников.</p>
   </header>
   <main>
-    <nav><a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#cleanup">Почта и уборка</a></nav>
+    <nav><a href="#summary">Сводка</a><a href="#runs">Запуски</a><a href="#tasks">Задачи</a><a href="#artifacts">Артефакты</a><a href="#rules">Правила проверки</a><a href="#cleanup">Уборка</a></nav>
 
     <h2 id="summary">Сводка</h2>
     <section class="grid">
       <article class="card"><div class="label">Статус проекта</div><div class="value">MVP</div><span class="badge ok">в работе</span></article>
-      <article class="card"><div class="label">Главный следующий этап</div><div class="value">SYNC-001</div><div>синхронизация репозитория с v0.8.1</div></article>
-      <article class="card"><div class="label">DEV-005</div><div class="value">Блок</div><div>не начинать до завершения SYNC-001</div></article>
-      <article class="card"><div class="label">Вечерний контроль</div><div class="value">22:02</div><div>29.06.2026</div></article>
+      <article class="card"><div class="label">SYNC-001</div><div class="value">Готово</div><div>main синхронизирован с v0.8.1</div></article>
+      <article class="card"><div class="label">Главный следующий этап</div><div class="value">DEV-005</div><div>можно планировать</div></article>
+      <article class="card"><div class="label">DEV-005</div><div class="value">Разблокирован</div><div>после проверки SYNC-001</div></article>
       <article class="card"><div class="label">Прототип</div><div class="value">0.8.1</div><div>properties-sync-fix</div></article>
-      <article class="card"><div class="label">Dashboard</div><div class="value">v0.7</div><div>обновлен вечерним контролем</div></article>
+      <article class="card"><div class="label">Dashboard</div><div class="value">v0.8</div><div>обновлен после SYNC-001</div></article>
     </section>
 
-    <h2 id="runs">Результаты плановых запусков</h2>
+    <h2 id="runs">Результаты проверок</h2>
     <section class="panel">
       <article class="run">
-        <div class="meta"><time datetime="2026-06-29T22:02:00+11:00">29.06.2026 22:02</time><span class="badge warn">Вечерний контроль SPI</span></div>
-        <pre class="message">Проведен вечерний контроль SPI Replacement / MVP КИПиА.
+        <div class="meta"><time datetime="2026-06-30T10:40:00+11:00">30.06.2026 10:40</time><span class="badge ok">SYNC-001 завершён</span></div>
+        <pre class="message">SYNC-001 практически завершён.
 
-1. Что сделано за день
-
-1. Зафиксирован актуальный прототип для дальнейшей синхронизации: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
-2. Подтверждена правильная последовательность работ: ближайший этап — SYNC-001, синхронизация GitHub-репозитория с проверенным прототипом v0.8.1.
-3. Перед загрузкой ZIP дополнительно защищены файлы dashboard и контроля проекта в workflow синхронизации: docs/spi-control-log.md, docs/spi-dashboard-private.html, send-spi-report-email.yml, update-spi-control-dashboard.yml, manual-test.yml.
-4. Подтверждено, что публичный dashboard находится в отдельном репозитории ivpetr168-hue/spi-dashboard, поэтому SYNC-001 в MVP-репозитории его напрямую не удаляет.
-5. Проверена схема отправки полного письма через GitHub Actions + Gmail App Password: тестовое письмо с полным текстом записи пришло.
-6. Проверены текущие dashboard: публичный и приватный dashboard содержат блок результатов плановых запусков и показывают SYNC-001 как главный следующий этап.
-
-2. Что не выполнено
-
-1. SYNC-001 еще не завершен.
-2. DEV-005 не начат и должен оставаться заблокированным до завершения SYNC-001.
-3. ZIP с прототипом пока не зафиксирован в PR #15: после сообщения пользователя «загрузил» в PR все еще видна старая голова ветки 2111b717940751bd4dc7926e8598df2b1dae3d4f, 3 коммита и 2 измененных файла.
-4. Автоматический workflow распаковки v0.8.1 не запускался успешно, потому что в ветке не появился коммит с файлом prototype_sources/kipia_mvp_prototype_v0_8_1_properties_sync_fix.zip.
-5. Исправление задвоения узлов типа Чайва-Чайва → Чайва еще не внесено в следующую версию прототипа. Это переносится после завершения SYNC-001.
-
-3. Ошибки и риски
-
-1. Главный риск дня: пользователь мог выбрать ZIP на странице GitHub, но не нажать нижнюю кнопку Commit changes. Поэтому GitHub не видит загруженный файл.
-2. Есть риск начать DEV-005 преждевременно. Это запрещено: сначала нужно завершить SYNC-001.
-3. Автоматическая отправка писем работает только после коммита в docs/spi-control-log.md на ветке main. Текущий вечерний контроль будет отправлен письмом уже после публикации этой записи в GitHub.
-4. Тестовые элементы пока убирать рано: реальный вечерний запуск с новой записью еще нельзя считать проверенным до подтверждения, что письмо по этой записи пришло.
-
-4. Актуальные версии и архитектурные ограничения
-
-1. Актуальный прототип: kipia_mvp_prototype_v0_8_1_properties_sync_fix.
-2. Актуальный следующий этап: SYNC-001.
-3. Запрещено: начинать DEV-005 до завершения SYNC-001.
-4. Архитектура MVP сохраняется: PostgreSQL-only; SQLite запрещен; backend — FastAPI + SQLAlchemy + Alembic; frontend — React/Vite; production — Linux + PostgreSQL; обязательный модуль — «Управление проектами / Dashboard / Планировщик».
-5. Проверяемые исправления v0.8.1: правая панель свойств синхронизируется с выбранным узлом дерева; свойства прибора показываются без контекстного меню; выбор прибора под Instrument Index открывает карточку прибора; данные идут из PostgreSQL через API; SQLite не используется.
-
-5. GitHub / Codex
-
-1. PR #15 SYNC-001 открыт, остается draft, mergeable, ветка sync-001-v081, head 2111b717940751bd4dc7926e8598df2b1dae3d4f, 3 коммита и 2 измененных файла.
-2. В workflow sync-v081-from-upload.yml добавлена защита dashboard-файлов и журналов.
-3. Новых подтвержденных изменений Codex за этот вечерний контроль не обнаружено.
-
-6. Письма и встречи по SPI
-
-1. Gmail: найдено тестовое письмо от SPI Dashboard с темой [SPI] 2026-06-29 16:50 — Тест отправки полного письма SPI; письмо содержит полный текст тестовой записи.
-2. Встречи: календарные события по запросу SPI за 2026-06-29 не найдены.
-
-7. Уборка после настройки уведомлений и почты
-
-Тестовое письмо пришло. Workflow Send SPI report email существует и настроен на push в main при изменении docs/spi-control-log.md. Уборку нужно отложить до подтверждения, что письмо по реальному вечернему запуску пришло. Поэтому manual-test.yml, тестовую запись 16:50, рабочий workflow и SMTP-секреты не трогаю.
-
-8. Перенос на завтра
-
-1. Завершить SYNC-001: добиться появления ZIP в ветке sync-001-v081, запустить workflow распаковки, проверить результат.
-2. После завершения SYNC-001 проверить список измененных файлов PR #15.
-3. Проверить, что в синхронизированном коде не потеряны исправления v0.8.1.
-4. Только после завершения SYNC-001 переходить к исправлению задвоения узлов.
-5. После подтверждения письма по реальному вечернему запуску выполнить уборку тестовых элементов.
-
-9. Следующие действия на завтра
-
-P1. Проверить, появился ли ZIP в ветке sync-001-v081. Если не появился — загрузить файл заново и обязательно нажать Commit changes.
-P1. Дождаться workflow SYNC-001 from uploaded v0.8.1 zip и проверить коммит SYNC-001: synchronize with v0.8.1 prototype.
-P1. Проверить PR #15 после автоматического коммита.
-P1. Убедиться, что dashboard, журнал и email-workflow не удалены после SYNC-001.
-P2. Проверить письмо по этой вечерней записи. Если письмо пришло — удалить тестовую запись и manual-test.yml.
-P2. После завершения SYNC-001 подготовить задачу на исправление задвоения узлов Чайва-Чайва → Чайва.
-P3. Вернуться к модулю «Управление проектами / Dashboard / Планировщик» как обязательной части MVP.</pre>
+Проверено:
+1. PR #15 слит в main.
+2. Свежий main скачан из GitHub.
+3. Локальный запуск через Docker выполнен.
+4. PostgreSQL работает.
+5. Backend работает.
+6. Swagger открывается.
+7. Интерфейс КИПиА MVP открывается.
+8. Узел «Индекс приборов» проверен.
+9. Выбор прибора под «Индекс приборов» открывает карточку прибора.
+10. Правая панель «Свойства» синхронизируется с выбранным прибором.
+11. Пользователь подтвердил: «все проверил все работает».</pre>
       </article>
     </section>
 
@@ -131,9 +79,9 @@ P3. Вернуться к модулю «Управление проектами
       <table>
         <thead><tr><th>ID</th><th>Статус</th><th>Результат</th><th>Следующий шаг</th></tr></thead>
         <tbody>
-          <tr><td>SYNC-001</td><td><span class="badge warn">не завершен</span></td><td>PR #15 открыт, но ZIP пока не зафиксирован в ветке.</td><td>Загрузить ZIP и нажать Commit changes.</td></tr>
-          <tr><td>DEV-005</td><td><span class="badge bad">заблокирован</span></td><td>Запуск запрещен до завершения SYNC-001.</td><td>Не начинать.</td></tr>
-          <tr><td>DASH-004</td><td><span class="badge ok">работает</span></td><td>Dashboard и журнал обновлены вечерним контролем.</td><td>Проверить письмо по реальной записи.</td></tr>
+          <tr><td>SYNC-001</td><td><span class="badge ok">завершён</span></td><td>PR #15 слит в main. Свежий main запущен локально через Docker и проверен.</td><td>Использовать main как базовую точку разработки.</td></tr>
+          <tr><td>DEV-005</td><td><span class="badge warn">можно планировать</span></td><td>Блокировка снята после завершения SYNC-001.</td><td>Определить точный состав DEV-005.</td></tr>
+          <tr><td>DASH-004</td><td><span class="badge ok">работает</span></td><td>Dashboard обновлён после завершения SYNC-001.</td><td>Проверить публикацию GitHub Pages.</td></tr>
         </tbody>
       </table>
     </section>
@@ -142,19 +90,30 @@ P3. Вернуться к модулю «Управление проектами
     <section class="panel">
       <ul>
         <li>Актуальный прототип: <b>kipia_mvp_prototype_v0_8_1_properties_sync_fix</b></li>
+        <li>Версия приложения: <b>0.8.1-properties-sync-fix</b></li>
+        <li>Базовая ветка разработки: <b>main после PR #15</b></li>
         <li>Backend: FastAPI + SQLAlchemy + Alembic</li>
         <li>Frontend: React/Vite</li>
         <li>База данных: PostgreSQL-only, SQLite запрещен</li>
-        <li>Обязательный модуль: «Управление проектами / Dashboard / Планировщик»</li>
       </ul>
     </section>
 
-    <h2 id="cleanup">Почта и уборка</h2>
+    <h2 id="rules">Правила проверки интерфейса</h2>
     <section class="panel">
-      <p>Тестовое письмо пришло. Реальное письмо по этой вечерней записи будет проверяться после коммита в журнал. Уборка отложена: manual-test.yml и тестовая запись 16:50 пока сохранены.</p>
+      <p>При проверке интерфейса нужно писать точные видимые надписи так, как они отображаются на экране.</p>
+      <ul>
+        <li>Если на экране написано «Индекс приборов», использовать «Индекс приборов».</li>
+        <li>Если на экране написано «Свойства», использовать «Свойства».</li>
+        <li>Не заменять русскую надпись английским термином.</li>
+      </ul>
     </section>
 
-    <div class="footer">Последнее обновление: 29.06.2026 22:02 — Вечерний контроль SPI.</div>
+    <h2 id="cleanup">Уборка</h2>
+    <section class="panel">
+      <p>Старые локальные архивы и папки не удалять до отдельной уборки. Ветку sync-001-v081 можно удалить позже, после проверки dashboard и отсутствия необходимости отката.</p>
+    </section>
+
+    <div class="footer">Последнее обновление: 30.06.2026 10:40 — SYNC-001 завершён после локальной проверки main.</div>
   </main>
 </body>
 </html>
