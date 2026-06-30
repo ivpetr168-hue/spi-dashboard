@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SPI Dashboard</title>
   <style>
-    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; }
+    :root { --bg:#f4f6f8; --card:#ffffff; --text:#111827; --muted:#6b7280; --line:#e5e7eb; --accent:#1f2937; }
     * { box-sizing:border-box; }
     body { margin:0; font-family:Arial, sans-serif; background:var(--bg); color:var(--text); }
     header { background:linear-gradient(135deg,#111827,#1f2937); color:white; padding:24px 18px; }
     header h1 { margin:0 0 8px 0; font-size:30px; }
-    header p { margin:0; color:#d1d5db; line-height:1.45; }
+    header p { margin:0; color:#d1d5db; line-height:1.45; max-width:980px; }
     main { padding:16px; max-width:1180px; margin:0 auto; }
     nav { display:flex; gap:8px; overflow-x:auto; padding:10px 0; position:sticky; top:0; background:var(--bg); z-index:2; }
     nav a { white-space:nowrap; text-decoration:none; background:white; border:1px solid var(--line); border-radius:999px; padding:8px 12px; color:#111827; }
@@ -24,6 +24,7 @@
     .ok { background:#dcfce7; color:#166534; }
     .warn { background:#fef3c7; color:#92400e; }
     .bad { background:#fee2e2; color:#991b1b; }
+    .info { background:#dbeafe; color:#1e40af; }
     .muted { color:var(--muted); }
     .run { border:1px solid var(--line); border-radius:14px; padding:14px; background:#fff; margin:12px 0; }
     .meta { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:8px; }
@@ -34,19 +35,23 @@
     th { background:#f9fafb; font-size:13px; color:#374151; }
     .table-wrap { overflow-x:auto; }
     ul { margin:8px 0 0 20px; padding:0; line-height:1.45; }
+    code { background:#f3f4f6; border:1px solid #e5e7eb; border-radius:6px; padding:1px 4px; }
+    a { color:#1d4ed8; }
     .footer { color:var(--muted); font-size:13px; margin:28px 0 10px; }
   </style>
 </head>
 <body>
   <header>
     <h1>SPI Dashboard</h1>
-    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Показывает актуальную версию, план, контрольные проверки и журнал работы без раскрытия приватных исходников.</p>
+    <p>Публичная панель проекта SPI Replacement / MVP КИПиА. Теперь это не только статусная страница, но и журнал работы: версии, планы, отчёты, проверки и следующие шаги.</p>
   </header>
   <main>
     <nav>
       <a href="#summary">Сводка</a>
       <a href="#journal">Журнал</a>
-      <a href="#tasks">Задачи</a>
+      <a href="#versions">Версии</a>
+      <a href="#plans">Планы</a>
+      <a href="#reports">Отчёты</a>
       <a href="#checks">Проверки</a>
       <a href="#rules">Правила</a>
       <a href="#next">Следующий шаг</a>
@@ -59,7 +64,7 @@
       <article class="card"><div class="label">Ветка main</div><div class="value">0.8.4_fix2</div><div>рабочая база проекта</div></article>
       <article class="card"><div class="label">Фиксированная ветка</div><div class="value">v0.8.4_fix2</div><div>версия зафиксирована</div></article>
       <article class="card"><div class="label">Следующий этап</div><div class="value">v0.8.5</div><div>реальные отчёты из PostgreSQL</div></article>
-      <article class="card"><div class="label">Dashboard</div><div class="value">Journal</div><div>публичный журнал работы</div></article>
+      <article class="card"><div class="label">Последнее обновление</div><div class="value">18:47</div><div>30.06.2026 Asia/Magadan</div></article>
     </section>
 
     <section class="panel">
@@ -77,8 +82,28 @@
       </ul>
     </section>
 
-    <h2 id="journal">Журнал работы</h2>
+    <h2 id="journal">Журнал</h2>
     <section class="panel">
+      <p>Раздел фиксирует фактические действия по проекту. Каждая запись должна иметь дату и время выполнения.</p>
+      <p class="muted">Текстовый источник журнала также сохранён в <a href="docs/project-journal.md">docs/project-journal.md</a>.</p>
+
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-30T18:47:00+11:00">30.06.2026 18:47 Asia/Magadan</time><span class="badge ok">структура журнала создана</span></div>
+        <pre class="message">Dashboard доработан как журнал работы проекта.
+
+Добавлены отдельные разделы:
+1. Сводка.
+2. Журнал.
+3. Версии.
+4. Планы.
+5. Отчёты.
+6. Проверки.
+7. Правила.
+8. Следующий шаг.
+
+Дополнительно создан файл docs/project-journal.md как текстовый источник журнала.</pre>
+      </article>
+
       <article class="run">
         <div class="meta"><time datetime="2026-06-30T18:42:00+11:00">30.06.2026 18:42 Asia/Magadan</time><span class="badge ok">dashboard обновлён</span></div>
         <pre class="message">Публичный dashboard обновлён под актуальную рабочую базу 0.8.4_fix2.
@@ -120,37 +145,64 @@
       </article>
     </section>
 
-    <h2 id="tasks">План-факт задач</h2>
+    <h2 id="versions">Версии</h2>
     <section class="panel table-wrap">
       <table>
-        <thead><tr><th>ID</th><th>Статус</th><th>Результат</th><th>Следующий шаг</th></tr></thead>
+        <thead><tr><th>Версия</th><th>Статус</th><th>Содержание</th><th>Примечание</th></tr></thead>
         <tbody>
           <tr>
-            <td>REL-0.8.4_fix2</td>
-            <td><span class="badge ok">актуально</span></td>
-            <td>main = 0.8.4_fix2, фиксированная ветка = v0.8.4_fix2.</td>
-            <td>Не менять main без подтверждения пользователя.</td>
+            <td><b>0.8.4_fix2</b></td>
+            <td><span class="badge ok">актуальная</span></td>
+            <td>Рабочая база проекта. main и v0.8.4_fix2 совпадают. README обновлён.</td>
+            <td>Не менять без подтверждения пользователя.</td>
           </tr>
           <tr>
-            <td>REPORT-v0.8.5</td>
-            <td><span class="badge warn">следующий этап</span></td>
-            <td>Цель: первые реальные отчёты Specification, Process Data, Cable Schedule из PostgreSQL.</td>
-            <td>Сначала подготовить список изменений. Код не менять без явной команды.</td>
+            <td><b>v0.8.5</b></td>
+            <td><span class="badge warn">следующая</span></td>
+            <td>Первые реальные отчёты: Specification, Process Data, Cable Schedule и простые табличные отчёты из PostgreSQL.</td>
+            <td>Сначала подготовить список изменений, код не менять без команды.</td>
           </tr>
           <tr>
-            <td>AUTO-EVENING</td>
-            <td><span class="badge warn">нужна проверка</span></td>
-            <td>Ручной запуск дал Gmail-письмо и уведомление на телефон.</td>
-            <td>Проверить автоматический запуск в 22:00 Asia/Magadan.</td>
-          </tr>
-          <tr>
-            <td>DASHBOARD-JOURNAL</td>
-            <td><span class="badge ok">включено</span></td>
-            <td>Публичный dashboard переведён в формат журнала работы.</td>
-            <td>Обновлять при каждой новой версии или fix проекта.</td>
+            <td>v0.8.1 / v0.8.2 / v0.8.3</td>
+            <td><span class="badge info">история</span></td>
+            <td>Исторические версии.</td>
+            <td>Не использовать как актуальный контекст.</td>
           </tr>
         </tbody>
       </table>
+    </section>
+
+    <h2 id="plans">Планы</h2>
+    <section class="panel">
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-30T08:00:00+11:00">Утренний план v3</time><span class="badge warn">актуальный шаблон</span></div>
+        <pre class="message">Главные акценты утреннего плана:
+1. Проверить, сработал ли автоматический запуск SPI Вечерний Контроль v4 в 22:00 Asia/Magadan без ручного запуска.
+2. Проверить Gmail-письмо с темой [SPI] Вечерний контроль — 0.8.4_fix2.
+3. Проверить уведомление на телефон и/или в браузер именно от автоматического запуска.
+4. Если автоматический запуск и уведомления подтверждены, перейти к подготовке v0.8.5.
+5. По v0.8.5 сначала подготовить список изменений, не менять код без явной команды.
+6. Проверить актуальность публичного dashboard как журнала работы.</pre>
+      </article>
+    </section>
+
+    <h2 id="reports">Отчёты</h2>
+    <section class="panel">
+      <article class="run">
+        <div class="meta"><time datetime="2026-06-30T22:00:00+11:00">Вечерний контроль v4</time><span class="badge warn">ожидает автозапуск</span></div>
+        <pre class="message">Вечерний отчёт должен включать:
+1. Что сделано за день.
+2. Какая версия прототипа сейчас актуальна.
+3. Какие проверки прошли успешно.
+4. Какие ошибки, замечания или риски остались.
+5. Что перенести на завтра.
+6. Приоритеты на завтра.
+7. Что проверить утром.
+8. Проверка доставки уведомлений.
+9. Состояние публичного dashboard.
+
+Обязательная Gmail-доставка: полный текст отчёта письмом на ivpetr168@gmail.com.</pre>
+      </article>
     </section>
 
     <h2 id="checks">Проверки</h2>
@@ -161,7 +213,7 @@
       <article class="card"><div class="label">Automation 22:00</div><div class="value">WAIT</div><span class="badge warn">ждём автозапуск</span></article>
     </section>
 
-    <h2 id="rules">Правила ведения проекта</h2>
+    <h2 id="rules">Правила</h2>
     <section class="panel">
       <ul>
         <li>Работать на русском языке.</li>
@@ -173,6 +225,7 @@
         <li>Перед новой версией сначала показать полный список изменений.</li>
         <li>Публичный dashboard обновлять при каждой новой версии или fix проекта.</li>
         <li>Публичный dashboard использовать как журнал работы с датой и временем выполнения.</li>
+        <li>Вечером пользователь может сообщать об окончании дня в произвольной форме. Если понятно, что день завершён, обновить вечернюю и утреннюю задачи; если неясно — переспросить.</li>
       </ul>
     </section>
 
@@ -182,7 +235,7 @@
       <p class="muted">После подтверждения автоматического запуска можно переходить к подготовке списка изменений для v0.8.5.</p>
     </section>
 
-    <div class="footer">Последнее обновление dashboard: 30.06.2026 18:42 Asia/Magadan. Commit выполняется в репозитории ivpetr168-hue/spi-dashboard, branch main.</div>
+    <div class="footer">Последнее обновление dashboard: 30.06.2026 18:47 Asia/Magadan. Репозиторий: ivpetr168-hue/spi-dashboard, branch main.</div>
   </main>
 </body>
 </html>
