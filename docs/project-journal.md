@@ -1,5 +1,38 @@
 # SPI Replacement / MVP КИПиА — журнал работы
 
+## 2026-07-01 11:45 Asia/Magadan — принято решение по дообследованию Oracle SPI DB
+
+**Статус:** решение зафиксировано.
+
+Вопрос пользователя: нужно ли дообследование базы данных Oracle SPI для получения дополнительной информации перед `v0.8.5`.
+
+Решение:
+- для старта `v0.8.5` дообследование Oracle SPI DB не является блокером;
+- `v0.8.5` можно начинать на текущей PostgreSQL-модели и загруженных эталонных отчётах;
+- дообследование Oracle SPI DB нужно, но его лучше вести параллельно и точечно, чтобы подготовить будущую миграцию реальных данных и последующие версии.
+
+Что достаточно для `v0.8.5` без Oracle:
+- отчёт `Instrument Specification`;
+- простые табличные отчёты `I/O Map` и `I/O Tag Assignment`;
+- демонстрационные данные в PostgreSQL;
+- проверка, какие поля уже есть в текущей модели и какие минимальные поля нужно добавить через Alembic.
+
+Что нужно дообследовать в Oracle SPI DB параллельно:
+1. Где в SPI хранятся приборы / tag numbers.
+2. Где хранятся loop numbers и связь Instrument → Loop.
+3. Где лежат specification forms и значения полей спецификаций.
+4. Где лежат process data.
+5. Где лежат I/O assignments: control system, cabinet, rack, slot, card, channel, terminal, tag number.
+6. Где лежат cable / wiring / terminal data.
+7. Как связаны Instrument → Cable → Core → Terminal → Panel → I/O Channel.
+8. Как SPI хранит report/document numbers и revision blocks.
+9. Как `OBJECT_REGISTRY.OBJECT_ID` / `OBJECT_UID` связаны с конкретными engineering tables.
+
+Практический вывод:
+- сейчас не останавливать `v0.8.5` ради полного исследования Oracle;
+- после утверждения `v0.8.5` создать отдельную исследовательскую задачу `ORA-REPORTS-001`;
+- цель `ORA-REPORTS-001`: составить карту Oracle SPI tables для данных, которые нужны отчётам `Instrument Specification`, `I/O Map`, `I/O Tag Assignment` и будущему `Point-to-Point Wiring Diagram`.
+
 ## 2026-07-01 11:30 Asia/Magadan — подготовлен список изменений для `v0.8.5` по отчётам без изменения кода
 
 **Статус:** выполнено. Код не изменялся. Ветка не создавалась. Новая версия не выпускалась.
